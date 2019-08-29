@@ -1,0 +1,6 @@
+RSuiteVersion: 0.37.253
+RVersion: 3.6
+Project: gan-rsuite
+Repositories: MRAN[2019-08-26]
+Artifacts: config_templ.txt
+ZipVersion: 0.1
