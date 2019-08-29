@@ -1,0 +1,177 @@
+---
+title: "R version of Discriminator and Generator"
+output: html_notebook
+---
+
+**Objective**
+- Reproduce the lambda (anonymous) functions for the distribution and generator.
+
+**Motivation**
+Anonymous functions will be needed for this GAN application.
+
+**Steps**
+1. Create functions for distribution sampler and generator input
+2. Identify R parameters for the numpy `normal` function
+3. Return the anonymous functions
+4. Test separately the lambda/anonymous functions
+5. Confirm values returned from Python and R are identical
+
+## R version
+
+```{r}
+library(rTorch)
+
+
+torch$manual_seed(123L)
+np$random$seed(seed=123L)
+
+# Data params
+data_mean = 4
+data_stddev = 1.25
+
+get_distribution_sampler <- function(mu, sigma) {
+    # torch.Tensor(np.random.normal(mu, sigma, (1, n)))
+    # the last member of the normal is the shape vector
+    function(n) torch$Tensor(np$random$normal(mu, sigma, c(1L, n)))
+}
+
+get_generator_input_sampler <- function(){
+    # lambda m, n: torch.rand(m, n) 
+    function(m, n) torch$rand(m, n)
+}    
+```
+
+```{r}
+d_sampler <- get_distribution_sampler(data_mean, data_stddev)
+d_sampler
+
+gi_sampler <- get_generator_input_sampler()
+gi_sampler
+```
+
+```{r}
+# parameters
+g_input_size <- 1L      # Random noise dimension coming into generator, per output vector
+d_input_size <- 500L    # Minibatch size - cardinality of distributions
+minibatch_size = d_input_size
+
+# real data from distribution
+d_real_data = d_sampler(d_input_size)
+d_real_data$shape
+
+# generator input
+d_gen_input = gi_sampler(minibatch_size, g_input_size)
+d_gen_input$shape
+
+```
+
+```{r}
+# flatten the tensor first
+fivenum(d_real_data$flatten()$numpy())
+fivenum(d_gen_input$flatten()$numpy())
+```
+
+
+
+## Python version
+
+```{r}
+library(rTorch)
+```
+
+```{python}
+import numpy as np
+import time
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.autograd import Variable
+
+
+torch.manual_seed(123)
+np.random.seed(seed=123)
+
+# Data params
+data_mean = 4
+data_stddev = 1.25
+
+
+def get_distribution_sampler(mu, sigma):
+    # Bell curve
+    return lambda n: torch.Tensor(np.random.normal(mu, sigma, (1, n)))  # Gaussian
+
+def get_generator_input_sampler():
+    return lambda m, n: torch.rand(m, n)   # Uniform-dist data into generator, _NOT_ Gaussian    
+    
+d_sampler = get_distribution_sampler(data_mean, data_stddev)
+d_sampler
+
+gi_sampler = get_generator_input_sampler()
+gi_sampler
+
+
+# parameters
+g_input_size = 1      # Random noise dimension coming into generator, per output vector
+d_input_size = 500    # Minibatch size - cardinality of distributions
+minibatch_size = d_input_size
+
+# real data from distribution
+d_real_data = d_sampler(d_input_size)
+# d_real_data
+
+# generator input
+d_gen_input = gi_sampler(minibatch_size, g_input_size)
+# d_gen_input
+
+
+from py_functions import fivenum
+
+fivenum(d_real_data.numpy().flatten())
+fivenum(d_gen_input.numpy().flatten())
+```
+
+```{r}
+# compare to R
+fivenum(reticulate::py$d_real_data$numpy())
+fivenum(reticulate::py$d_gen_input$numpy())
+```
+
+## sandbox
+
+### Generate "n" numbers for a normal distribution
+
+```{python}
+import numpy as np
+
+n = 5
+mu = 4
+sigma = 1.25
+np.random.normal(mu, sigma, (1, n))
+```
+
+```{r}
+n = 5L
+mu = 4
+sigma = 1.25
+np$random$normal(mu, sigma, n)
+```
+
+
+```{python}
+# a simple lambda function
+(lambda variable: variable + " doing stuff")("code")
+(lambda x: x + 1)(5)
+```
+
+```{r}
+# R equivalent
+f <- function(x) x + 1
+f(5)
+```
+
+```{r}
+# (lambda x: x + 1)(5)
+# R equivalent shorter
+(function(x) x + 1)(5)
+```
+

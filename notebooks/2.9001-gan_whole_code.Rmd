@@ -1,0 +1,54 @@
+---
+title: "call Python script for fivenum"
+output: html_notebook
+---
+
+**Objective**
+- Test the Python version of R `fivenum`
+
+**Motivation**
+Since the D and G are tensors of 500 elements, we need a small number to confirm both tensors are the same in Python and R.
+
+**Recipe**
+1. Write the function as part of the script `py_functions.py`
+2. Modify the original function to conform to tensors
+3. Test the function against lists, arrays and tensors
+
+**Sources**
+- https://rosettacode.org/wiki/Fivenum#Python 
+
+
+```{r}
+library(rTorch)
+```
+
+
+
+```{python}
+from py_functions import fivenum
+
+
+x = [0.14082834, 0.09748790, 1.73131507, 0.87636009, -1.95059594, 0.73438555, -0.03035726, 1.46675970,
+-0.74621349, -0.72588772, 0.63905160, 0.61501527, -0.98983780, -1.00447874, -0.62759469, 0.66206163,
+1.04312009, -0.10305385, 0.75775634, 0.32566578]
+ 
+y = fivenum(x)
+print(y)    
+```
+
+## when argument is a list
+
+```{python}
+# x is a list
+type(x)
+```
+
+## when argument is a numpy array
+
+```{python}
+import numpy as np
+y = np.random.rand(100)
+
+fivenum(y.tolist())      # convert to list
+fivenum(y)               # conversion from numpy array to list is done in the function
+```

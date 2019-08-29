@@ -1,0 +1,93 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(rTorch)
+
+nn <- torch$nn
+optim <- torch$optim
+Variable <- torch$autograd$Variable
+
+data_mean <- 4
+data_stddev <- 1.25
+
+
+```
+
+
+```{r}
+library(rTorch)
+```
+
+
+```{python}
+# Generative Adversarial Networks (GAN) example in PyTorch. Tested with PyTorch 0.4.1, Python 3.6.7 (Nov 2018)
+# See related blog post at https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch-e81b79659e3f#.sch4xgsa9
+
+import numpy as np
+import time
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.autograd import Variable
+
+# Data params
+data_mean = 4
+data_stddev = 1.25
+
+(name, preprocess, d_input_func) = ("Only 4 moments", lambda data: get_moments(data), lambda x: 4)
+
+print("Using data [%s]" % (name))
+
+# ##### DATA: Target data and generator input data
+
+
+def get_distribution_sampler(mu, sigma):
+    # Bell curve
+    return lambda n: torch.Tensor(np.random.normal(mu, sigma, (1, n)))  # Gaussian
+
+
+def get_generator_input_sampler():
+    return lambda m, n: torch.rand(m, n)   # Uniform-dist data into generator, _NOT_ Gaussian
+
+
+# ##### MODELS: Generator model and discriminator model
+
+
+def extract(v):
+    return v.data.storage().tolist()
+
+
+def stats(d):
+    return [np.mean(d), np.std(d)]
+
+
+def get_moments(d):
+    # Return the first 4 moments of the data provided
+    mean = torch.mean(d)
+    diffs = d - mean
+    var = torch.mean(torch.pow(diffs, 2.0))
+    std = torch.pow(var, 0.5)
+    zscores = diffs / std
+    skews = torch.mean(torch.pow(zscores, 3.0))
+    kurtoses = torch.mean(torch.pow(zscores, 4.0)) - 3.0  # excess kurtosis, should be 0 for Gaussian
+    final = torch.cat((mean.reshape(1,), std.reshape(1,), skews.reshape(1,), kurtoses.reshape(1,)))
+    return final
+
+
+def decorate_with_diffs(data, exponent, remove_raw_data=False):
+    mean = torch.mean(data.data, 1, keepdim=True)
+    mean_broadcast = torch.mul(torch.ones(data.size()), mean.tolist()[0][0])
+    diffs = torch.pow(data - Variable(mean_broadcast), exponent)
+    if remove_raw_data:
+        return torch.cat([diffs], 1)
+    else:
+        return torch.cat([data, diffs], 1)
+```
+
+```{python}
+data
+```
+

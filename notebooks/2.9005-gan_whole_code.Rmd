@@ -1,0 +1,202 @@
+---
+title: "Generator and Discriminator classes"
+output: html_notebook
+---
+
+__Objective__
+Reproduce the Python classes `Generator` and `Discriminator`.
+
+__Steps__
+1. Enclose Python function inside `py_run_string()`
+2. Assign Python classes to R objects
+3. Declare parameters for class instantiation
+4. Instantiate R object classes
+
+
+```{r}
+library(rTorch)
+```
+
+## R version
+
+```{r}
+nn <- torch$nn
+
+# lambda functions
+name         <- "Only 4 moments"
+preprocess   <- function(data) get_moments(data)
+d_input_func <- function(x) 4L
+
+
+py_run_string("import torch")
+main = py_run_string(
+"
+import torch.nn as nn
+
+class Generator(nn.Module):
+    # Two hidden layers
+    # Three linear maps
+    def __init__(self, input_size, hidden_size, output_size, f):
+        super(Generator, self).__init__()
+        self.map1 = nn.Linear(input_size, hidden_size)
+        self.map2 = nn.Linear(hidden_size, hidden_size)
+        self.map3 = nn.Linear(hidden_size, output_size)
+        self.f = f
+
+    def forward(self, x):
+        x = self.map1(x)
+        x = self.f(x)
+        x = self.map2(x)
+        x = self.f(x)
+        x = self.map3(x)
+        return x
+
+
+class Discriminator(nn.Module):
+    # also two hidden layer and three linear maps
+    def __init__(self, input_size, hidden_size, output_size, f):
+        super(Discriminator, self).__init__()
+        self.map1 = nn.Linear(input_size, hidden_size)
+        self.map2 = nn.Linear(hidden_size, hidden_size)
+        self.map3 = nn.Linear(hidden_size, output_size)
+        self.f = f
+
+    def forward(self, x):
+        x = self.f(self.map1(x))
+        x = self.f(self.map2(x))
+        return self.f(self.map3(x))
+"    
+)
+
+Generator     <- main$Generator
+Discriminator <- main$Discriminator
+
+
+# Model parameters
+g_input_size <- 1L      # Random noise dimension coming into generator, per output vector
+g_hidden_size <- 5L     # Generator complexity
+g_output_size <- 1L     # Size of generated output vector
+d_input_size <- 500L    # Minibatch size - cardinality of distributions
+d_hidden_size <- 10L    # Discriminator complexity
+d_output_size <- 1L     # Single dimension for 'real' vs. 'fake' classification
+minibatch_size = d_input_size
+
+d_learning_rate <- 1e-3
+g_learning_rate <- 1e-3
+sgd_momentum <- 0.9
+
+num_epochs <- 500
+print_interval <- 100
+d_steps <- 20
+g_steps <- 20
+
+dfe <- 0; dre <- 0; ge <- 0
+d_real_data <- NULL; d_fake_data <- NULL; g_fake_data <- NULL
+
+# Activation functions
+discriminator_activation_function = torch$sigmoid
+generator_activation_function     = torch$tanh        
+        
+
+
+G = Generator(input_size=g_input_size,
+                  hidden_size=g_hidden_size,
+                  output_size=g_output_size,
+                  f=generator_activation_function)  
+G
+
+D = Discriminator(input_size=d_input_func(d_input_size),
+                      hidden_size=d_hidden_size,
+                      output_size=d_output_size,
+                      f=discriminator_activation_function)
+D  
+```
+
+
+
+## Python version
+
+```{python}
+import numpy as np
+import torch
+import torch.nn as nn
+
+
+(name, preprocess, d_input_func) = ("Only 4 moments", lambda data: get_moments(data), lambda x: 4)
+
+
+
+class Generator(nn.Module):
+    # Two hidden layers
+    # Three linear maps
+    def __init__(self, input_size, hidden_size, output_size, f):
+        super(Generator, self).__init__()
+        self.map1 = nn.Linear(input_size, hidden_size)
+        self.map2 = nn.Linear(hidden_size, hidden_size)
+        self.map3 = nn.Linear(hidden_size, output_size)
+        self.f = f
+
+    def forward(self, x):
+        x = self.map1(x)
+        x = self.f(x)
+        x = self.map2(x)
+        x = self.f(x)
+        x = self.map3(x)
+        return x
+
+
+class Discriminator(nn.Module):
+    # also two hidden layer and three linear maps
+    def __init__(self, input_size, hidden_size, output_size, f):
+        super(Discriminator, self).__init__()
+        self.map1 = nn.Linear(input_size, hidden_size)
+        self.map2 = nn.Linear(hidden_size, hidden_size)
+        self.map3 = nn.Linear(hidden_size, output_size)
+        self.f = f
+
+    def forward(self, x):
+        x = self.f(self.map1(x))
+        x = self.f(self.map2(x))
+        return self.f(self.map3(x))
+        
+        
+# Model parameters
+g_input_size = 1      # Random noise dimension coming into generator, per output vector
+g_hidden_size = 5     # Generator complexity
+g_output_size = 1     # Size of generated output vector
+d_input_size = 500    # Minibatch size - cardinality of distributions
+d_hidden_size = 10    # Discriminator complexity
+d_output_size = 1     # Single dimension for 'real' vs. 'fake' classification
+minibatch_size = d_input_size
+
+d_learning_rate = 1e-3
+g_learning_rate = 1e-3
+sgd_momentum = 0.9
+
+num_epochs = 500
+print_interval = 100
+d_steps = 20
+g_steps = 20
+
+dfe, dre, ge = 0, 0, 0
+d_real_data, d_fake_data, g_fake_data = None, None, None
+
+# Activation functions
+discriminator_activation_function = torch.sigmoid
+generator_activation_function = torch.tanh        
+        
+
+
+G = Generator(input_size=g_input_size,
+                  hidden_size=g_hidden_size,
+                  output_size=g_output_size,
+                  f=generator_activation_function)  
+G
+
+D = Discriminator(input_size=d_input_func(d_input_size),
+                      hidden_size=d_hidden_size,
+                      output_size=d_output_size,
+                      f=discriminator_activation_function)
+D                      
+```
+
