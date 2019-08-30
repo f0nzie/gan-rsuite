@@ -24,12 +24,16 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 
+t = time.time()
+
 matplotlib_is_available = True
 try:
     from matplotlib import pyplot as plt
 except ImportError:
     print("Will skip plotting; matplotlib is not available.")
     matplotlib_is_available = False
+
+# seeds
 
 torch.manual_seed(123)
 np.random.seed(seed=123)
@@ -232,11 +236,29 @@ def train():
         plt.pause(0.1)
     
     return values
+    
+ret_values = train()
+elapsed = time.time() - t
+print(elapsed)
 ```
 
+
+
 ```{python}
-ret_values = train()
+# get fivenum
+import py_functions   # custom made Python functions
+
+py_functions.fivenum(ret_values)
 ```
+
+```
+Seed  fivenum                                                       elapsed
+1234  [1.32874608, 5.18888569, 6.50792909, 6.70664406, 6.75441313]   155
+1234  [1.32874608, 5.18888569, 6.50792909, 6.70664406, 6.75441313]   169
+123   [2.17975092, 5.01890564, 5.56917953, 6.74270916, 8.50322437]   133
+123   [2.17975092, 5.01890564, 5.56917953, 6.74270916, 8.50322437]
+```
+
 
 ```{python}
 import py_functions   # custom made Python functions
