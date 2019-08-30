@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-# Generative Adversarial Networks (GAN) example in PyTorch. Tested with PyTorch 0.4.1, Python 3.6.7 (Nov 2018)
-# See related blog post at https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch-e81b79659e3f#.sch4xgsa9
+# Generative Adversarial Networks (GAN) example in PyTorch. Tested with PyTorch 0.4.1, Python 3.6.7 (Nov 2018) See
+# related blog post at https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch
+# -e81b79659e3f#.sch4xgsa9
 
 import numpy as np
 import torch
@@ -30,14 +31,16 @@ print("Using data [%s]" % (name))
 
 # ##### DATA: Target data and generator input data
 
+
 def get_distribution_sampler(mu, sigma):
     return lambda n: torch.Tensor(np.random.normal(mu, sigma, (1, n)))  # Gaussian
+
 
 def get_generator_input_sampler():
     return lambda m, n: torch.rand(m, n)  # Uniform-dist data into generator, _NOT_ Gaussian
 
-# ##### MODELS: Generator model and discriminator model
 
+# ##### MODELS: Generator model and discriminator model
 class Generator(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, f):
         super(Generator, self).__init__()
@@ -54,6 +57,7 @@ class Generator(nn.Module):
         x = self.map3(x)
         return x
 
+
 class Discriminator(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, f):
         super(Discriminator, self).__init__()
@@ -67,11 +71,14 @@ class Discriminator(nn.Module):
         x = self.f(self.map2(x))
         return self.f(self.map3(x))
 
+
 def extract(v):
     return v.data.storage().tolist()
 
+
 def stats(d):
     return [np.mean(d), np.std(d)]
+
 
 def get_moments(d):
     # Return the first 4 moments of the data provided
@@ -85,6 +92,7 @@ def get_moments(d):
     final = torch.cat((mean.reshape(1,), std.reshape(1,), skews.reshape(1,), kurtoses.reshape(1,)))
     return final
 
+
 def decorate_with_diffs(data, exponent, remove_raw_data=False):
     mean = torch.mean(data.data, 1, keepdim=True)
     mean_broadcast = torch.mul(torch.ones(data.size()), mean.tolist()[0][0])
@@ -93,6 +101,7 @@ def decorate_with_diffs(data, exponent, remove_raw_data=False):
         return torch.cat([diffs], 1)
     else:
         return torch.cat([data, diffs], 1)
+
 
 def train():
     # Model parameters
