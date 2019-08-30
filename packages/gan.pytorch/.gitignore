@@ -3,3 +3,4 @@
 .Rdata
 .Ruserdata
 inst/doc
+*.xml
