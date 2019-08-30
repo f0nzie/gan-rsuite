@@ -10,3 +10,5 @@ notebooks/__pycache__/
 *.html
 
 packages/gan.pytorch/inst/python/gan/.idea/
+
+*.xml
