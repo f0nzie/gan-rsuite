@@ -240,6 +240,39 @@ train <- function(){
 }
 
 ret_values <- train()
+toc()
+```
+
+```{r}
+fivenum(ret_values)
+```
+
+```
+seed  fivenum                                                elapsed
+1234  [1] 1.777934 1.974298 2.504709 4.623446 7.593332        616
+1234  [1] 1.777934 1.974298 2.504709 4.623446 7.593332        630s
+123   [1] 0.6488572 3.6433918 4.3728058 5.2974150 8.1929731   649s
+123   [1] 0.6488572 3.6433918 4.3728058 5.2974150 8.1929731   647s
+123   [1] 0.6488572 3.6433918 4.3728058 5.2974150 8.1929731   
+```
+
+```{r}
+data.frame(ret_values)
+```
+
+
+
+```{r}
+df <- data.frame(ret_values)
+df
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(df, aes(x=ret_values)) +
+    geom_histogram(aes(y = ..density..), bins = 50) +
+    geom_density(alpha = 0.2, fill = "#CA5521")
 
 ```
 
