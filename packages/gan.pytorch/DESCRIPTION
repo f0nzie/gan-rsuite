@@ -8,5 +8,6 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Imports: logging,
-  rTorch
+  rTorch,
+  tictoc
 RoxygenNote: 6.1.1

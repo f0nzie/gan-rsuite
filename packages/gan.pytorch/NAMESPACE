@@ -4,3 +4,4 @@ export(gan.pytorch_getLogger)
 import(logging)
 
 import(rTorch)
+import(tictoc)
