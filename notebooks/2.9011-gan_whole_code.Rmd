@@ -1,0 +1,49 @@
+
+
+**Observations**
+1. There is no difference in execution time in calling the Python module from R notebook or
+executing it from PyCharm.
+2. Importing a function that calls numpy erases the seeds in the GAN. Fix: Call the function `fivenum` before numpy for GAN
+
+
+
+```{r}
+library(rTorch)
+library(tictoc)
+```
+
+
+```{python}
+import time
+
+t = time.time()
+from gan_torch import train
+
+ret_values = train()
+elapsed = time.time() - t
+print("Elapsed time (s)\n", elapsed)
+```
+
+```{python}
+from py_functions import fivenum
+
+fivenum(ret_values)
+```
+
+```
+seed   fivenum
+12345  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   26s  RPy
+12345  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   31s  RPy
+12345  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   32s  pycharm
+1234   [3.37023258, 4.42031693, 5.62633276, 6.63578749, 7.46455002]   69s  RPy
+123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   25s  RPy
+123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   23s  RPy
+
+```
+
+seed
+2233445566 skewed-L
+223344     skewed-R
+987654321  skewed-R
+113579     skewed-R
+2468       no-bell
