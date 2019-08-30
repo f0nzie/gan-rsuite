@@ -5,10 +5,13 @@
 # -e81b79659e3f#.sch4xgsa9
 
 import numpy as np
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
+
+t = time.time()
 
 matplotlib_is_available = True
 try:
@@ -117,7 +120,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 5000
+    num_epochs = 500
     print_interval = 100
     d_steps = 20
     g_steps = 20
@@ -193,3 +196,6 @@ def train():
 
 
 train()
+
+elapsed = time.time() - t
+print(elapsed)
