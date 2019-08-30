@@ -185,6 +185,7 @@ def train():
 
             #  1A: Train D on real data
             d_real_data = Variable(d_sampler(d_input_size))
+            print(d_real_data)
             d_real_decision = D(preprocess(d_real_data))
             d_real_error = criterion(d_real_decision, Variable(torch.ones([1,1])))  # ones = true
             d_real_error.backward()  # compute/store gradients, but don't change params
@@ -195,10 +196,11 @@ def train():
             d_fake_decision = D(preprocess(d_fake_data.t()))
             d_fake_error = criterion(d_fake_decision, Variable(torch.zeros([1,1])))  # zeros = fake
             d_fake_error.backward()
-            d_optimizer.step()     # Only optimizes D's parameters; changes based on stored gradients from backward()
-
+            # Only optimizes D's parameters; changes based on stored gradients from backward()
+            d_optimizer.step()     
             dre, dfe = extract(d_real_error)[0], extract(d_fake_error)[0]
-
+            # print(d_real_data)
+        
         for g_index in range(g_steps):
             # 2. Train G on D's response (but DO NOT train D on these labels)
             G.zero_grad()
