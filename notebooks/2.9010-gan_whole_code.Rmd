@@ -20,6 +20,9 @@ nn       <- torch$nn
 optim    <- torch$optim
 Variable <- torch$autograd$Variable
 
+# seeds
+torch$manual_seed(123L)
+np$random$seed(seed=123L)
 
 # Data params
 data_mean <- 4
@@ -33,13 +36,13 @@ d_input_func <- function(x) 4L
 
 
 get_distribution_sampler <- function(mu, sigma) {
-    # torch.Tensor(np.random.normal(mu, sigma, (1, n)))
+    # in Python: torch.Tensor(np.random.normal(mu, sigma, (1, n)))
     # the last member of the normal is the shape vector
     function(n) torch$Tensor(np$random$normal(mu, sigma, c(1L, n)))
 }
 
 get_generator_input_sampler <- function(){
-    # lambda m, n: torch.rand(m, n) 
+    #  in Python: lambda m, n: torch.rand(m, n) 
     function(m, n) torch$rand(m, n)
 }
 
@@ -53,7 +56,8 @@ get_moments <- function(d) {
     zscores <- diffs / std
     skews <- torch$mean(torch$pow(zscores, 3.0))
     kurtoses <- torch$mean(torch$pow(zscores, 4.0)) - 3.0
-    # torch.cat((mean.reshape(1,), std.reshape(1,), skews.reshape(1,), kurtoses.reshape(1,)))
+    #  in Python: torch.cat((mean.reshape(1,), std.reshape(1,), 
+    #                        skews.reshape(1,), kurtoses.reshape(1,)))
     final <- torch$cat(c(torch$reshape(mean, list(1L)), torch$reshape(std, list(1L)),
                        torch$reshape(skews, list(1L)), torch$reshape(kurtoses, list(1L))))
     return(final)    
