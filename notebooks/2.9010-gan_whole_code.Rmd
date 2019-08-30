@@ -13,7 +13,7 @@ output: html_notebook
 
 ## R version
 
-```{r}
+```{r fig.asp=1}
 library(rTorch)
 
 nn       <- torch$nn
@@ -123,10 +123,7 @@ list_for_cat <- function(li) {
     paste0("[", cum, "]")
 }
     
-```
 
-
-```{r}
 train <- function(){
     # Model parameters
     g_input_size <- 1L      # Random noise dimension coming into generator, per output vector
@@ -228,9 +225,12 @@ train <- function(){
     values = extract(g_fake_data)
     cat(sprintf(" Values: %s", str(values)))
     hist(values, breaks = 50, col =  "lightblue")
+    
+    return(values)
 }
 
-train()
+ret_values <- train()
+
 ```
 
 
