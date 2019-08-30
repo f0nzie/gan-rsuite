@@ -112,15 +112,15 @@ stats <- function(d) {
     return(list(np$mean(d), np$std(d)))
 }
 
-# for 1D list
+# Prepare a 1D list for printing with cat()
 list_for_cat <- function(li) {
     cum <- ""
     len <- length(li)
     for (i in seq(length(li))) {
-        sep <- ifelse(i != len, ", ",  "")
-        cum <- paste0(cum, paste0(li[i], sep))
+        sep <- ifelse(i != len, ", ",  "")   # use comma at the end only if not last
+        cum <- paste0(cum, paste0(li[i], sep))  # compose the string
     }
-    paste0("[", cum, "]")
+    paste0("[", cum, "]")  # return list elements as a string enclosed by square brackets
 }
     
 
