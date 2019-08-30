@@ -144,7 +144,7 @@ train <- function(){
     d_input_size <- 500L    # Minibatch size - cardinality of distributions
     d_hidden_size <- 10L    # Discriminator complexity
     d_output_size <- 1L     # Single dimension for 'real' vs. 'fake' classification
-    minibatch_size = d_input_size
+    minibatch_size <- d_input_size
     
     d_learning_rate <- 1e-3
     g_learning_rate <- 1e-3
@@ -159,8 +159,8 @@ train <- function(){
     d_real_data <- NULL; d_fake_data <- NULL; g_fake_data <- NULL
     
     # Activation functions
-    discriminator_activation_function = torch$sigmoid
-    generator_activation_function     = torch$tanh        
+    discriminator_activation_function <- torch$sigmoid
+    generator_activation_function     <- torch$tanh        
     
     d_sampler = get_distribution_sampler(data_mean, data_stddev)
     gi_sampler = get_generator_input_sampler()
@@ -177,9 +177,8 @@ train <- function(){
                           f=discriminator_activation_function)
     
     criterion <- nn$BCELoss()  # Binary cross entropy: http://pytorch.org/docs/nn.html#bceloss
-    d_optimizer = optim$SGD(D$parameters(), lr = d_learning_rate, momentum = sgd_momentum)
-    g_optimizer = optim$SGD(G$parameters(), lr = g_learning_rate, momentum = sgd_momentum)
-    
+    d_optimizer <- optim$SGD(D$parameters(), lr = d_learning_rate, momentum = sgd_momentum)
+    g_optimizer <- optim$SGD(G$parameters(), lr = g_learning_rate, momentum = sgd_momentum)
     
     # Now, training loop alternates between Generator and Discriminator modes
 
@@ -201,11 +200,10 @@ train <- function(){
             d_gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
             d_fake_data = G(d_gen_input)$detach()  # detach to avoid training G on these labels
             d_fake_decision = D(preprocess(d_fake_data$t()))
-            d_fake_error = criterion(d_fake_decision, Variable(torch$zeros( list(1L, 1L) )))  # zeros = fake
+            d_fake_error = criterion(d_fake_decision, Variable(torch$zeros( list(1L, 1L) ))) # zeros = fake
             d_fake_error$backward()
             # Only optimizes D's parameters; changes based on stored gradients from backward()
             d_optimizer$step()     
-
             dre <- extract(d_real_error)[1]; dfe <- extract(d_fake_error)[1]
             
         }
