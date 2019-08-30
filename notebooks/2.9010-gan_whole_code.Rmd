@@ -3,18 +3,26 @@ title: "build loop for Generator"
 output: html_notebook
 ---
 
+**Objective**
+Build the whole script in R.
 
-1. Convert PyTorch code to rTorch code
-2. Add Variable method
-3. COnvert functions `extract` and `stats`
-4. Create new function `list_for_cat` to convert list to a printable string by cat
-5. For loop for `epoch` starts at zero not one.
-6. For loops for Discriminator and Generator should start at zero
+**Recipe**
+1. Plot histogram
+2. Return values for the fake dataset
+3. Add seed for numpy and PyTorch
+4. Add `tic` and `toc`
+5. Use function `fivenum` to compare statistical properties of the fake dataset
+6. Use `ggplot2` to plot the histogram
+7. Copy, paste `fivenum` results to a separate table including the seeds and ellapsed time.
+
 
 ## R version
 
 ```{r fig.asp=1}
 library(rTorch)
+library(tictoc)
+
+tic()
 
 nn       <- torch$nn
 optim    <- torch$optim

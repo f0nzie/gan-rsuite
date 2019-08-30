@@ -3,10 +3,13 @@ title: "build loop for Discriminant"
 output: html_notebook
 ---
 
+**Objective**
+Add loop for the Discriminator.
 
+**Recipe**
 1. Convert PyTorch code to rTorch code
-2. Add class Variable
-3. 
+2. Add `Variable`
+3. Add other steps to resolve neural network.
 
 ## R version
 

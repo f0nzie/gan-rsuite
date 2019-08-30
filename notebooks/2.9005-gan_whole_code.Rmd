@@ -7,8 +7,8 @@ __Objective__
 Reproduce the Python classes `Generator` and `Discriminator`.
 
 __Steps__
-1. Enclose Python function inside `py_run_string()`
-2. Assign Python classes to R objects
+1. Enclose Python classes inside `reticulate::py_run_string()`
+2. Assign Python classes to R objects `Generator` and `Discriminator`
 3. Declare parameters for class instantiation
 4. Instantiate R object classes
 

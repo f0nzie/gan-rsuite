@@ -3,13 +3,20 @@ title: "build loop for Generator"
 output: html_notebook
 ---
 
+**Objective**
+Add `for` loop for the Generator.
 
+**Recipe**
 1. Convert PyTorch code to rTorch code
-2. Add Variable method
-3. COnvert functions `extract` and `stats`
+2. Add `Variable` method
+3. Convert functions `extract` and `stats`
 4. Create new function `list_for_cat` to convert list to a printable string by cat
-5. For loop for `epoch` starts at zero not one.
-6. For loops for Discriminator and Generator should start at zero
+5. `for` loop for `epoch` starts at zero not one.
+6. `for` loops for Discriminator and Generator should start at zero as well.
+
+
+**Challenges**
+1. In Python the `print` function handles `lists` very well. In R, because we use the function `cat`, we have to convert the list to a string where elements of the list are comma separated. A new function `list_for_cat` has to be created to convert the list of a string.
 
 ## R version
 

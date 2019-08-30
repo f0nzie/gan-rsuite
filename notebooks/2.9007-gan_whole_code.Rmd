@@ -3,6 +3,9 @@ title: "build loop for epochs"
 output: html_notebook
 ---
 
+**Objective**
+Add loop for epochs and test.
+
 
 ## R version
 

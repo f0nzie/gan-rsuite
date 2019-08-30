@@ -6,6 +6,14 @@ output: html_notebook
 __Objective__
 Reproduce the `preprocess` lambda function.
 
+**Recipe**
+1. Build the preprocess function using an anonymous function
+2. Build the function `get_moments` which will be part of the anonymous function
+3. Test `preprocess` in R and compare to Python results
+
+**Challenges**
+- The PyTorch function `reshape` in R receives parameters in different way than Python. In Python it is `mean.reshape(1,)`, while in R is `torch$reshape(mean, list(1L))`
+- The PyTorch function `cat` works like this `torch.cat((t1, t2, t3, t4))`, while in R we have to use `torch$cat(c(t1, t2, t3, t4))` to concatenate the tensors.
 
 ## R version
 

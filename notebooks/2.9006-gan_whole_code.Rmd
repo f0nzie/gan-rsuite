@@ -3,6 +3,14 @@ title: "Build train() function"
 output: html_notebook
 ---
 
+**Objective**
+Build the skeleton of the `train()` function.
+
+**Recipe**
+1. Move body of code inside `train()`
+2. The body has five parts: parameters declaration, initialization, set the activation functions, instantiate the Generator and Discriminator, set the criterion and optimizer.
+3. Add the criterion and optimizer.
+
 
 
 ## R version
