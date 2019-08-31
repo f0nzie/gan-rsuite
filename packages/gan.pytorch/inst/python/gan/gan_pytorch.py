@@ -202,8 +202,10 @@ def train():
         plt.pause(0.1)
 
 
-for i in range(10):
-    print("Run: ", i)
+# produce a certain number of sample distributions
+n_samples = 10
+for s in range(n_samples):
+    print("Run: ", s)
     train()
 
 
