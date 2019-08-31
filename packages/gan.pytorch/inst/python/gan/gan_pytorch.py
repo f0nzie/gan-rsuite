@@ -194,7 +194,7 @@ def train():
         values = extract(g_fake_data)
         # print(" Values: %s" % (str(values)))
         print(" fivenum: %s" % (str(fivenum(values))))
-        plt.hist(values, bins=50, alpha=0.2)
+        plt.hist(values, bins=50, alpha=0.55)
         plt.xlabel('Value')
         plt.ylabel('Count')
         plt.title('Histogram of Generated Distribution')
