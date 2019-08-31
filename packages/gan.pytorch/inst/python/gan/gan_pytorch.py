@@ -197,8 +197,7 @@ def train():
         plt.pause(0.1)
 1
 
-
-for i in range(10):
+for i in range(1):
     print("Run: ", i)
     train()
 
