@@ -14,7 +14,7 @@ from torch.autograd import Variable
 t = time.time()
 
 # seed
-seed = 12345
+seed = 123
 torch.manual_seed(seed)
 np.random.seed(seed=seed)
 
@@ -125,7 +125,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 4000
+    num_epochs = 1250
     print_interval = 100
     d_steps = 20
     g_steps = 20
@@ -202,7 +202,7 @@ def train():
         plt.pause(0.1)
 1
 
-for i in range(1):
+for i in range(10):
     print("Run: ", i)
     train()
 
