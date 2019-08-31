@@ -192,7 +192,10 @@ def train():
         plt.ylabel('Count')
         plt.title('Histogram of Generated Distribution')
         plt.grid(True)
-        plt.show()
+        # plt.show()
+        plt.draw()
+        plt.pause(0.1)
+1
 
 
 for i in range(10):
