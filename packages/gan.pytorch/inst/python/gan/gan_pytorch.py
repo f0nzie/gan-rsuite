@@ -14,7 +14,7 @@ from torch.autograd import Variable
 t = time.time()
 
 # seed
-seed = 123
+seed = 555
 torch.manual_seed(seed)
 np.random.seed(seed=seed)
 
