@@ -14,7 +14,7 @@ from torch.autograd import Variable
 t = time.time()
 
 # seed
-seed = 555
+seed = 777
 torch.manual_seed(seed)
 np.random.seed(seed=seed)
 
@@ -192,7 +192,7 @@ def train():
         print("Plotting the generated distribution...")
         values = extract(g_fake_data)
         print(" Values: %s" % (str(values)))
-        plt.hist(values, bins=50)
+        plt.hist(values, bins=50, alpha=0.5)
         plt.xlabel('Value')
         plt.ylabel('Count')
         plt.title('Histogram of Generated Distribution')
