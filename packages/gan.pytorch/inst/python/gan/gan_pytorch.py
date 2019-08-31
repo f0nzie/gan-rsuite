@@ -202,5 +202,7 @@ for i in range(10):
     print("Run: ", i)
     train()
 
+
 elapsed = time.time() - t
-print(elapsed)
+print("Elapsed time", elapsed)
+plt.show()
