@@ -13,6 +13,11 @@ from torch.autograd import Variable
 
 t = time.time()
 
+# seed
+seed = 12345
+torch.manual_seed(seed)
+np.random.seed(seed=seed)
+
 matplotlib_is_available = True
 try:
   from matplotlib import pyplot as plt
@@ -120,7 +125,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 5000
+    num_epochs = 500
     print_interval = 100
     d_steps = 20
     g_steps = 20
