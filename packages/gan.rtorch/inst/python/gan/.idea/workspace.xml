@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d6626e9-d1c1-463b-a1f3-527b4f2a0163" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/.Rprofile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/DESCRIPTION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/NAMESPACE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/NEWS" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/R/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/R/package_logger.R" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/R/package_validation.R" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/R/packages_import.R" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/gan.rtorch.Rproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../../gan.rtorch/man/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.Rprofile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../DESCRIPTION" beforeDir="false" afterPath="$PROJECT_DIR$/../../../DESCRIPTION" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../NAMESPACE" beforeDir="false" afterPath="$PROJECT_DIR$/../../../NAMESPACE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../R/package_logger.R" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../R/package_validation.R" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../R/packages_import.R" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../R/python_imports.R" beforeDir="false" afterPath="$PROJECT_DIR$/../../../R/python_imports.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gan_pytorch.py" beforeDir="false" afterPath="$PROJECT_DIR$/gan_pytorch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../man/.gitignore" beforeDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +23,11 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
   </component>
+  <component name="ProjectId" id="1QD0N1CAaCUY6Q5kcYkCQ4ahN6t" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -68,6 +72,13 @@
     <configuration />
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d6626e9-d1c1-463b-a1f3-527b4f2a0163" name="Default Changelist" comment="" />
+      <created>1567289815515</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1567289815515</updated>
+    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -75,7 +86,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

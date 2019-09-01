@@ -3,7 +3,6 @@
 # related blog post at https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch
 # -e81b79659e3f#.sch4xgsa9
 
-from py_functions import fivenum
 import numpy as np
 import time
 import torch
@@ -14,7 +13,7 @@ from torch.autograd import Variable
 t = time.time()
 
 # seed
-seed = 777
+seed = 12345
 torch.manual_seed(seed)
 np.random.seed(seed=seed)
 
@@ -191,8 +190,8 @@ def train():
     if matplotlib_is_available:
         print("Plotting the generated distribution...")
         values = extract(g_fake_data)
-        # print(" Values: %s" % (str(values)))
-        print(" fivenum: %s" % (str(fivenum(values))))
+        print(" Values: %s" % (str(values)))
+        # print(" fivenum: %s" % (str(fivenum(values))))
         plt.hist(values, bins=50, alpha=0.55)
         plt.xlabel('Value')
         plt.ylabel('Count')

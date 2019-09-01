@@ -11,3 +11,9 @@ notebooks/__pycache__/
 
 packages/gan.pytorch/inst/python/gan/.idea/**
 
+
+packages/gan.rtorch.Rcheck/gan.rtorch/Meta/
+
+packages/gan.rtorch.Rcheck/
+
+*.gz
