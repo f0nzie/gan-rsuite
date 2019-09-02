@@ -8,8 +8,8 @@ optim    <- torch$optim
 Variable <- torch$autograd$Variable
 
 # seeds
-torch$manual_seed(123L)
-np$random$seed(seed=123L)
+torch$manual_seed(12345L)
+np$random$seed(seed=12345L)
 
 # Data params
 data_mean <- 4
@@ -129,7 +129,7 @@ train <- function(){
     g_learning_rate <- 1e-3
     sgd_momentum <- 0.9
 
-    num_epochs <- 500
+    num_epochs <- 10000
     print_interval <- 100
     d_steps <- 20
     g_steps <- 20
