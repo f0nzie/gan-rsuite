@@ -203,7 +203,7 @@ def train():
         # print(" Values: %s" % (str(values)))
         print(" fivemnum %s" % str(fivenum(values)))
         
-        plt.hist(values, bins=50, alpha=0.5)
+        plt.hist(values, bins=50, alpha=0.6)
         plt.xlabel('Value')
         plt.ylabel('Count')
         plt.title('Histogram of Generated Distribution')
