@@ -17,3 +17,5 @@ packages/gan.rtorch.Rcheck/gan.rtorch/Meta/
 packages/gan.rtorch.Rcheck/
 
 *.gz
+
+packages/gan.rtorch/inst/python/gan/.idea/
