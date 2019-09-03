@@ -24,6 +24,7 @@ do.call(c, lapply(1:10, foo_outer))
 ```
 
 ```{r}
+# change for-loops to several lapply functions
 library(rTorch)
 
 nn       <- torch$nn
