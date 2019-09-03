@@ -131,7 +131,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 1300
+    num_epochs = 1350
     print_interval = 100
     d_steps = 10
     g_steps = 10
