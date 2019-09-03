@@ -219,16 +219,19 @@ def train():
         # plt.show()
         # plt.show(block=False)
         plt.pause(0.1)
+        
+        # print("Seed: %d; epochs: %d" % (seed, epochs))
+        print("Seed: %d" % seed)
 
     return values
 
 
 
-# for i in range(10):
-#     print("Run: ", i)
-#     train()
-#     #plt.draw()
-#     #plt.pause(0.1)
+for i in range(10):
+    print("Run: ", i)
+    train()
+    #plt.draw()
+    #plt.pause(0.1)
 
 
 # plt.show()
