@@ -131,7 +131,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 1350
+    num_epochs = 500
     print_interval = 100
     d_steps = 10
     g_steps = 10
@@ -202,7 +202,7 @@ def train():
         print("Plotting the generated distribution...")
         values = extract(g_fake_data)
         # print(" Values: %s" % (str(values)))
-        print(" fivemnum %s" % str(fivenum(values)))
+        # print(" fivemnum %s" % str(fivenum(values)))
         
         plt.hist(values, bins=50, alpha=0.6)
         plt.xlabel('Value')
@@ -226,12 +226,13 @@ def train():
     return values
 
 
+# train()
 
-for i in range(10):
-    print("Run: ", i)
-    train()
-    #plt.draw()
-    #plt.pause(0.1)
+# for i in range(10):
+#     print("Run: ", i)
+#     train()
+#     #plt.draw()
+#     #plt.pause(0.1)
 
 
 # plt.show()

@@ -4,7 +4,8 @@ from __future__ import division
 import math
 import sys
 import numpy as np
- 
+
+
 def fivenum(array):
     if isinstance(array, np.ndarray): array = array.tolist()
     n = len(array)
