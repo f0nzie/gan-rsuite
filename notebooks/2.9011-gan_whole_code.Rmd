@@ -1,5 +1,5 @@
 ---
-title: "Run PyTorch module from R"
+title: "Call PyTorch GAN module from R"
 output: html_notebook
 ---
 
@@ -13,6 +13,8 @@ executing it from PyCharm.
 
 **Findings**
 The problem with this approach is that the printing occurs at the end of the process because Python cannot print in real time from Rmarkdown, but it is as fast as Python.
+
+## Generating one sample
 
 ```{r}
 library(rTorch)
@@ -40,14 +42,21 @@ fivenum(ret_values)
 ```
 
 ```
-seed   epochs fivenum
-123    1300   [1.61412501, 3.470173, 3.87879944, 3.91737449, 6.37562752]   48s
-12345            [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   26s  RPy
-12345  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   31s  RPy
-12345  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   32s  pycharm
-1234   [3.37023258, 4.42031693, 5.62633276, 6.63578749, 7.46455002]   69s  RPy
-123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   25s  RPy
-123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   23s  RPy
+seed   epochs fivenum                                                   elapsed  samples
+123    1350  [3.17094469, 3.27750134, 3.45596218, 3.89294767, 4.53159809]   42.0    1
+123    1350  [3.17094469, 3.27750134, 3.45596218, 3.89294767, 4.53159809]   41.9    1
+123    1350  [1.61412501, 3.470173, 3.87879944, 3.91737449, 6.37562752]     41.5    1
+123    1350  [3.17094469, 3.27750134, 3.45596218, 3.89294767, 4.53159809]   55.6s   1
+123    1350  [1.25216794, 4.08316994, 4.11475229, 4.87367249, 7.09628868]  490.5   10
+123    1350  [1.25216794, 4.08316994, 4.11475229, 4.87367249, 7.09628868]  511.4s  10
+123    1300  [1.61412501, 3.470173, 3.87879944, 3.91737449, 6.37562752]     48s
+
+12345  1300  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   26s  RPy
+12345  1300  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   31s  RPy
+12345  1300  [2.83475399, 6.81544995, 8.23231077, 8.48933601, 8.55300331]   32s  pycharm
+1234   [3.37023258, 4.42031693, 5.62633276, 6.63578749, 7.46455002]   69s   RPy
+123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   25s   RPy
+123    [3.98940754, 7.07395077, 9.02420712, 9.09411144, 9.11281872]   23s   RPy
 
 ```
 
@@ -57,5 +66,10 @@ seed
 987654321  skewed-R
 113579     skewed-R
 2468       no-bell
+
+> Observations
+1. Taking one sample will give most likely a skewed distribution.
+2. The `fivenum` of one sample will be different than the fivenum of a greater number of samples.
+3. The returned values from a GAN with a seed will be repeatable if the process followed during the execution is exactly the same. For instance, if the notebook is restarted when generating a sample, for the next sample to be the same, the notebook will have to be restarted as well.
 
 
