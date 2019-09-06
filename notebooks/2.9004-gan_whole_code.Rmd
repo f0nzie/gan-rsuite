@@ -1,5 +1,5 @@
 ---
-title: "preprocessing data with a lambda function"
+title: "Convert preprocess lambda function"
 output: html_notebook
 ---
 

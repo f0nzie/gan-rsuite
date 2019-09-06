@@ -1,5 +1,5 @@
 ---
-title: "Generate multiple samples (no plot)"
+title: "Generate samples using Python code (no plot)"
 output: html_notebook
 ---
 
@@ -11,14 +11,15 @@ library(tictoc)
 
 tic()
 # gan_noplot.py lives under notebooks/ folder
-gan <- reticulate::import("gan_noplot")   # import Python script
+# gan <- reticulate::import("gan_noplot")   # import Python script
+gan   <- import("gan_noplot")   # import available in rTorch
 train <- gan$train
 sample <- vector("list")
 for (i in seq(1:10)) {
     cat("sample:", i, "\n")
     ret_values = train()
     print(fivenum(ret_values))
-    sample[[i]] <- ret_values
+    sample[[i]] <- ret_values     # save samples in a list vector
 }
 toc()
 ```

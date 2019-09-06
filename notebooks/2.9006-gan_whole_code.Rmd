@@ -1,5 +1,5 @@
 ---
-title: "Build train() function"
+title: "Build the train() function"
 output: html_notebook
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "build loop for Generator"
+title: "Test loops for Discriminator and Generator"
 output: html_notebook
 ---
 

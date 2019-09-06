@@ -3,7 +3,22 @@ title: "GAN in Python"
 output: html_notebook
 ---
 
+## TOC
+- 9001: Build fivenum function in Python
+- 9002: Get random values for discriminator and generator
+- 9003: Normal and Uniform distributions
+- 9004: Convert preprocess lambda function
+- 9005: Generator and Discriminator classes
+- 9006: Build the train() function
+- 9007: Build loop for epochs
+- 9008: Build loop for Discriminator
+- 9009: build loop for Generator
+- 9010: Test loops for Discriminator and Generator
+- 9011: Call PyTorch GAN module from R
 
+
+
+## Introduction
 This is the starter notebook with the original PyTorch code for the Generative Adversarial Network to create synthetic datasets.
 
 
