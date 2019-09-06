@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Test GAN with rTorch"
 output: html_notebook
 ---
 
