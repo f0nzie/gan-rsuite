@@ -1,5 +1,5 @@
 ---
-title: "build loop for Discriminant"
+title: "Build loop for Discriminator"
 output: html_notebook
 ---
 

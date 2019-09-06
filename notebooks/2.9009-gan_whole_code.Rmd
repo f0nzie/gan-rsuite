@@ -1,5 +1,5 @@
 ---
-title: "build loop for Generator"
+title: "Build loop for Generator"
 output: html_notebook
 ---
 
