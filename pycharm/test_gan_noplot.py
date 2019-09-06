@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-# Generative Adversarial Networks (GAN) example in PyTorch. Tested with PyTorch 0.4.1, Python 3.6.7 (Nov 2018)
-# See related blog post at https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch-e81b79659e3f#.sch4xgsa9
+# Generative Adversarial Networks (GAN) example in PyTorch. Tested with PyTorch 0.4.1, Python 3.6.7 (Nov 2018).
+# See related blog post at:
+# https://medium.com/@devnag/generative-adversarial-networks-gans-in-50-lines-of-code-pytorch-e81b79659e3f#.sch4xgsa9
 
 from py_functions import fivenum
 
@@ -125,7 +126,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 500
+    num_epochs = 1350
     print_interval = 100
     d_steps = 10
     g_steps = 10
@@ -209,9 +210,11 @@ print(elapsed)
 
 
 # seed  epochs samples fivenum                                                         elapsed
-# 123   5000      10    [1.04320347, 3.47335768, 3.91627431, 4.63770247, 6.90819263]    1858.6
-# 123   2500       10   [0.9962399, 3.34057629, 3.91210759, 4.49536586, 6.78304386]       840.5s
-# 123   1350       10   [2.96761703, 4.59823823, 5.95017767, 6.13095522, 6.1617837]       576.7s
-# 123    500      10    [4.68381405, 6.96075773, 10.52783871, 10.84263134, 10.88271141]   175.5s
+# 123   1350      10   [2.96761703, 4.59823823, 5.95017767, 6.13095522, 6.1617837]       469.3s
+# 123    500      10   [4.68381405, 6.96075773, 10.52783871, 10.84263134, 10.88271141]   169.7s
+# 123   5000      10   [1.04320347, 3.47335768, 3.91627431, 4.63770247, 6.90819263]     1858.6s
+# 123   2500      10   [0.9962399, 3.34057629, 3.91210759, 4.49536586, 6.78304386]       840.5s
+# 123   1350      10   [2.96761703, 4.59823823, 5.95017767, 6.13095522, 6.1617837]       576.7s
+# 123    500      10   [4.68381405, 6.96075773, 10.52783871, 10.84263134, 10.88271141]   175.5s
 
 
