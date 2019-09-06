@@ -1,0 +1,3 @@
+[submodule "packages/gan.rtorch"]
+	path = packages/gan.rtorch
+	url = https://github.com/f0nzie/gan.rtorch

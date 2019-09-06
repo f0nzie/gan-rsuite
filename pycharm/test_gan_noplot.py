@@ -13,14 +13,8 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import Variable
 
-# t = time.time()
+t = time.time()
 
-matplotlib_is_available = True
-try:
-    from matplotlib import pyplot as plt
-except ImportError:
-    print("Will skip plotting; matplotlib is not available.")
-    matplotlib_is_available = False
 
 # seeds
 seed = 123
@@ -198,47 +192,26 @@ def train():
                   (epoch, dre, dfe, ge, stats(extract(d_real_data)), stats(extract(d_fake_data))))
             sys.stdout.flush()
 
-    if matplotlib_is_available:
-        print("Plotting the generated distribution...")
         values = extract(g_fake_data)
-        # print(" Values: %s" % (str(values)))
-        # print(" fivemnum %s" % str(fivenum(values)))
-        
-        plt.hist(values, bins=50, alpha=0.6)
-        plt.xlabel('Value')
-        plt.ylabel('Count')
-        plt.title('Histogram of Generated Distribution')
-        plt.grid(True)
-
-        # plt.show()
-        # plt.savefig("fig.pdf")
-        # time.sleep(0.1)
-        # plt.savefig("fig.pdf")
-        # plt.clf()
-        plt.draw()
-        # plt.show()
-        # plt.show(block=False)
-        plt.pause(0.1)
-        
-        # print("Seed: %d; epochs: %d" % (seed, epochs))
-        print("Seed: %d" % seed)
 
     return values
 
 
-# train()
+for i in range(10):
+    print("Run: ", i)
+    ret_values = train()
+    print("Seed: %d" % seed)
+    # print("Seed: %d; epochs: %d" % (seed, epochs))
+    print(fivenum(ret_values))
 
-# for i in range(10):
-#     print("Run: ", i)
-#     train()
-#     #plt.draw()
-#     #plt.pause(0.1)
+elapsed = time.time() - t
+print(elapsed)
 
 
-# plt.show()
+# seed  epochs samples fivenum                                                         elapsed
+# 123   5000      10    [1.04320347, 3.47335768, 3.91627431, 4.63770247, 6.90819263]    1858.6
+# 123   2500       10   [0.9962399, 3.34057629, 3.91210759, 4.49536586, 6.78304386]       840.5s
+# 123   1350       10   [2.96761703, 4.59823823, 5.95017767, 6.13095522, 6.1617837]       576.7s
+# 123    500      10    [4.68381405, 6.96075773, 10.52783871, 10.84263134, 10.88271141]   175.5s
 
 
-# ret_values = train()
-# elapsed = time.time() - t
-# print(elapsed)
-# print("DONE!")

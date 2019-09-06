@@ -15,13 +15,6 @@ from torch.autograd import Variable
 
 # t = time.time()
 
-matplotlib_is_available = True
-try:
-    from matplotlib import pyplot as plt
-except ImportError:
-    print("Will skip plotting; matplotlib is not available.")
-    matplotlib_is_available = False
-
 # seeds
 seed = 123
 torch.manual_seed(seed)
@@ -131,7 +124,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 500
+    num_epochs = 5000
     print_interval = 100
     d_steps = 10
     g_steps = 10
@@ -198,47 +191,14 @@ def train():
                   (epoch, dre, dfe, ge, stats(extract(d_real_data)), stats(extract(d_fake_data))))
             sys.stdout.flush()
 
-    if matplotlib_is_available:
-        print("Plotting the generated distribution...")
+        # print("Plotting the generated distribution...")
         values = extract(g_fake_data)
         # print(" Values: %s" % (str(values)))
         # print(" fivemnum %s" % str(fivenum(values)))
         
-        plt.hist(values, bins=50, alpha=0.6)
-        plt.xlabel('Value')
-        plt.ylabel('Count')
-        plt.title('Histogram of Generated Distribution')
-        plt.grid(True)
-
-        # plt.show()
-        # plt.savefig("fig.pdf")
-        # time.sleep(0.1)
-        # plt.savefig("fig.pdf")
-        # plt.clf()
-        plt.draw()
-        # plt.show()
-        # plt.show(block=False)
-        plt.pause(0.1)
-        
         # print("Seed: %d; epochs: %d" % (seed, epochs))
-        print("Seed: %d" % seed)
+        # print("Seed: %d" % seed)
 
     return values
 
 
-# train()
-
-# for i in range(10):
-#     print("Run: ", i)
-#     train()
-#     #plt.draw()
-#     #plt.pause(0.1)
-
-
-# plt.show()
-
-
-# ret_values = train()
-# elapsed = time.time() - t
-# print(elapsed)
-# print("DONE!")
