@@ -19,3 +19,9 @@ packages/gan.rtorch.Rcheck/
 *.gz
 
 packages/gan.rtorch/inst/python/gan/.idea/
+
+pycharm/__pycache__/
+
+pycharm/.idea/
+
+notebooks/.ipynb_checkpoints/
