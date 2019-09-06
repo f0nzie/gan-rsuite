@@ -3,6 +3,11 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+
+## TOC
+- 3.9001: Generate samples using Python code (no plot)
+- 3.9000: Run Python to R imports
+
 ```{r}
 library(rTorch)
 
