@@ -13,5 +13,5 @@ Each iteration produces a new distribution sample.
 
 
 
-
+* There is an impact on the speed ofr the train() loop when the algorithm is transported to R. At leats, the train loop takes 10 times as much as the loop in the native Python.
 

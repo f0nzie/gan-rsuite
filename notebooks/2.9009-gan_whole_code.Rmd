@@ -222,6 +222,7 @@ train <- function(){
                 g_error$backward()
                 g_optimizer$step()  # Only optimizes G's parameters
                 ge = extract(g_error)[1]
+                print(ge)
         }
         
         if ((epoch %% print_interval) == 0) {

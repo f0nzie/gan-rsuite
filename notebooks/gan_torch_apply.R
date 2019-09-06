@@ -8,8 +8,8 @@ optim    <- torch$optim
 Variable <- torch$autograd$Variable
 
 # seeds
-torch$manual_seed(123L)
-np$random$seed(seed=123L)
+torch$manual_seed(12345L)
+np$random$seed(seed=12345L)
 
 # Data params
 data_mean <- 4
@@ -129,7 +129,7 @@ train <- function(){
     g_learning_rate <- 1e-3
     sgd_momentum <- 0.9
 
-    num_epochs <- 500
+    num_epochs <- 10000
     print_interval <- 100
     d_steps <- 20
     g_steps <- 20
@@ -161,49 +161,68 @@ train <- function(){
 
     # Now, training loop alternates between Generator and Discriminator modes
 
-    for (epoch in (0:num_epochs)) {
-        ## cat(sprintf("%5d:", epoch))
-        for (d_index in (0:d_steps)) {
-            ## cat(sprintf("%3d", d_index))
+    d_func <- function() {
+        #lapply(seq(0, d_steps), function(x) {
 
-            # 1. Train D on real+fake
-            D$zero_grad()
+        ## cat(sprintf("%3d", d_index))
 
-            #  1A: Train D on real data
-            d_real_data = Variable(d_sampler(d_input_size))
+        # 1. Train D on real+fake
+        D$zero_grad()
 
-            d_real_decision = D(preprocess(d_real_data))
-            d_real_error = criterion(d_real_decision, Variable(torch$ones( list(1L, 1L) )))  # ones = true
-            d_real_error$backward()  # compute/store gradients, but don't change params
+        #  1A: Train D on real data
+        d_real_data = Variable(d_sampler(d_input_size))
 
-            #  1B: Train D on fake data
-            d_gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
-            d_fake_data = G(d_gen_input)$detach()  # detach to avoid training G on these labels
-            d_fake_decision = D(preprocess(d_fake_data$t()))
-            d_fake_error = criterion(d_fake_decision, Variable(torch$zeros( list(1L, 1L) ))) # zeros = fake
-            d_fake_error$backward()
-            # Only optimizes D's parameters; changes based on stored gradients from backward()
-            d_optimizer$step()
-            dre <- extract(d_real_error)[1]; dfe <- extract(d_fake_error)[1]
-        }
-        # print(d_real_data)
-        ## cat("\n")
+        d_real_decision = D(preprocess(d_real_data))
+        d_real_error = criterion(d_real_decision, Variable(torch$ones( list(1L, 1L) )))  # ones = true
+        d_real_error$backward()  # compute/store gradients, but don't change params
 
-        for (g_index in (0:g_steps)){
-            # 2. Train G on D's response (but DO NOT train D on these labels)
-            G$zero_grad()
+        #  1B: Train D on fake data
+        d_gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
+        d_fake_data = G(d_gen_input)$detach()  # detach to avoid training G on these labels
+        d_fake_decision = D(preprocess(d_fake_data$t()))
+        d_fake_error = criterion(d_fake_decision, Variable(torch$zeros( list(1L, 1L) ))) # zeros = fake
+        d_fake_error$backward()
+        # Only optimizes D's parameters; changes based on stored gradients from backward()
+        d_optimizer$step()
+        dre <- extract(d_real_error)[1]; dfe <- extract(d_fake_error)[1]
+        return(list(d_real_data, d_fake_data, dre, dfe))
+    }
 
-            gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
-            g_fake_data = G(gen_input)
-            dg_fake_decision = D(preprocess(g_fake_data$t()))
-            # Train G to pretend it's genuine
-            g_error = criterion(dg_fake_decision, Variable(torch$ones( list(1L, 1L) )))
+    g_func <- function() {
+        # 2. Train G on D's response (but DO NOT train D on these labels)
+        G$zero_grad()
 
-            g_error$backward()
-            g_optimizer$step()  # Only optimizes G's parameters
-            ge = extract(g_error)[1]
-            cat(ge)
-        }
+        gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
+        g_fake_data <- G(gen_input)
+        dg_fake_decision = D(preprocess(g_fake_data$t()))
+        # Train G to pretend it's genuine
+        g_error = criterion(dg_fake_decision, Variable(torch$ones( list(1L, 1L) )))
+        g_error$backward()
+        g_optimizer$step()  # Only optimizes G's parameters
+        ge = extract(g_error)[1]
+        return(list(g_fake_data, ge))
+    }
+
+    # for (epoch in (0:num_epochs)) {
+    lapply(0:num_epochs, function(epoch) {
+
+        dre_dfe_all <- do.call(list, invisible(lapply(0:d_steps, function(i) d_func())))
+        dre_dfe <- unlist(dre_dfe_all[length(dre_dfe_all)])
+        d_real_data <- dre_dfe[[1]]
+        d_fake_data <- dre_dfe[[2]]
+        dre <- dre_dfe[[3]]
+        dfe <- dre_dfe[[3]]
+
+        # for (i in (0:d_steps)) {
+        # }
+
+        ge_all <- do.call(list, invisible(lapply(0:g_steps, function(g_index) g_func())))
+        ge_all <- unlist(ge_all[length(ge_all)])
+        g_fake_data <- ge_all[[1]]
+        ge <- ge_all[[2]]
+
+        # for (g_index in (0:g_steps)) {
+        # }
 
         if ((epoch %% print_interval) == 0) {
             cat(sprintf("\t Epoch %4d: D (%8f5 real_err, %8f5 fake_err) G (%8f5 err); Real Dist (%s),  Fake Dist (%s) \n",
@@ -211,7 +230,7 @@ train <- function(){
                         list_for_cat(stats(extract(d_real_data))),
                         list_for_cat(stats(extract(d_fake_data))) ))
         }
-    }
+    })
     print("Plotting the generated distribution...")
     values = extract(g_fake_data)
     cat(sprintf(" Values: %s", str(values)))

@@ -1,0 +1,91 @@
+---
+title: "Generate multiple samples (no plot)"
+output: html_notebook
+---
+
+## Generating multiple samples
+
+```{r}
+library(rTorch)
+library(tictoc)
+
+tic()
+
+gan <- reticulate::import("gan_noplot")
+train <- gan$train
+sample <- vector("list")
+for (i in seq(1:10)) {
+    cat("sample:", i, "\n")
+    ret_values = train()
+    print(fivenum(ret_values))
+    sample[[i]] <- ret_values
+}
+toc()
+```
+
+```
+seed   epochs  samples   fivenum                                           elapsed  from
+123    5000      10      1.043203 3.473358 3.916274 4.637702 6.908193       1402.5  Rmarkdown
+123    5000      10      1.043203 3.473358 3.916274 4.637702 6.908193       1365.5  Rmarkdown
+123    2500      10      0.9962399 3.3405763 3.9121076 4.4953659 6.7830439   808.7  Rmarkdown 
+123    5000      10      1.043203 3.473358 3.916274 4.637702 6.908193       1674.1  Rmarkdown
+123    2500      10      0.9962399 3.3405763 3.9121076 4.4953659 6.7830439   832.8  Rmarkdown
+123    1350      10      2.967617 4.598238 5.950178 6.130955 6.161784        421.3  Rmarkdown
+123    1350      10      2.967617 4.598238 5.950178 6.130955 6.161784        379.5  Rmarkdown
+123     500      10      4.683814  6.960758 10.527839 10.842631 10.882711    133.3  Rmarkdown
+123     500      10      4.683814  6.960758 10.527839 10.842631 10.882711    136.5  Rmarkdown
+123     500      10      3.061919 3.302748 3.547017 4.564566 7.119848        144.2  Rmarkdown
+```
+
+```{r}
+lapply(sample, hist)
+save(sample, file = "s123e5000_2.rda")
+```
+
+```{r}
+lapply(sample, hist, breaks=60)
+# lapply(sample, function(x) hist(x, breaks=60))
+```
+
+
+> Observations
+1. The more epochs are added, the more normal the distribution will look.
+2. There are some distributions that are skewed to the right or the left but are one or two from the ten samples.
+3. The distribution samples can be reproduced by applying seeds to numpy and PyTorch.
+4. To be able to make the seeds and sampling repeatable it is critical to restart the run environment so it is all started from scratch.
+5. The speed at running the train() function from R is the same as running the same train() function from Python itself.
+
+
+
+```{r}
+library(rTorch)
+```
+
+
+
+```{python}
+# Generate only one sample from training. No external loop.
+import time
+t = time.time()
+
+from gan_noplot import train  # this script is under notebooks. same folder.
+
+for i in range(10):
+    ret_values = train()
+    print(ret_values)
+
+elapsed = time.time() - t
+print("Elapsed time (s)\n", elapsed)
+```
+
+```{python}
+from py_functions import fivenum
+fivenum(ret_values)
+```
+
+
+```
+seed epochs samples   fivenum                                                     elapsed
+123  5000   10       [1.04320347, 3.47335768, 3.91627431, 4.63770247, 6.90819263]  1554s
+
+```

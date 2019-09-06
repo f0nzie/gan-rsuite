@@ -11,3 +11,17 @@ notebooks/__pycache__/
 
 packages/gan.pytorch/inst/python/gan/.idea/**
 
+
+packages/gan.rtorch.Rcheck/gan.rtorch/Meta/
+
+packages/gan.rtorch.Rcheck/
+
+*.gz
+
+packages/gan.rtorch/inst/python/gan/.idea/
+
+pycharm/__pycache__/
+
+pycharm/.idea/
+
+notebooks/.ipynb_checkpoints/
