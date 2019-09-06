@@ -1,5 +1,5 @@
 ---
-title: "Generate multiple samples (no plot)"
+title: "Generate samples using Python code (no plot)"
 output: html_notebook
 ---
 
