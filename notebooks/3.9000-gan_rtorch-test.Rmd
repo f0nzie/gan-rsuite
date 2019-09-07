@@ -1,7 +1,16 @@
 ---
-title: "R Notebook"
+title: "Run Python to R imports"
 output: html_notebook
 ---
+
+**Objective**
+Test some Python functions imported into R via the `gan.rtorch` package.
+
+**Recipe**
+1. Test the `gan_dummy()` function
+2. Compare the R `fivenum` vs the python `py_fivenum` functions
+3. Run the `train()` function with one parameter (`epochs`)
+
 
 ```{r}
 library(gan.rtorch)
@@ -10,6 +19,7 @@ gan_dummy()
 
 
 ```{r}
+# test fivenum
 cat("R\n")
 fivenum(c(1,2,3,4,5,7))
 fivenum(matrix(seq(1, 100), nrow = 10))
@@ -25,7 +35,7 @@ py_fivenum(c(array(seq(0.1, 10), dim =c(10, 5, 2))))
 library(gan.rtorch)
 tictoc::tic()
 
-train <- gan.rtorch::gan_train(1350)
+train <- gan.rtorch::gan_train(500)
 
 fivenum(train)
 tictoc::toc()
@@ -50,6 +60,7 @@ epochs    fivenum                                             elapsed  samples
 1. the elapsed time increases proportionally to the number of epochs for only one distribution sample.
 2. Still Python waits until the end of the process to print any output.
 3. All the samples are random numbers.
+4. Build the gan.rtorch package from the terminal at master project level if we want to pick up changes in Python code from the notebooks. Restart notebook first.
 
 
 ```{r}

@@ -1,5 +1,5 @@
 ---
-title: "build loop for epochs"
+title: "Build loop for epochs"
 output: html_notebook
 ---
 

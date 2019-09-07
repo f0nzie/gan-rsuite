@@ -1,16 +1,16 @@
 ---
-title: "get random values for distribution and generator"
+title: "Get random values for discriminator and generator"
 output: html_notebook
 ---
 
 **Objective**
-- Reproduce the arrays for the distribution and generator.
+- Reproduce the arrays for the discriminator and generator.
 
 **Motivation**
 Since the D and G are tensors of 500 lements, we need a small number to confirm both tensors are the same in Python and R.
 
 **Steps**
-1. Tensors for distribution and generator
+1. Tensors for discriminator and generator
 2. Confirm `fivenum` is the same for Python and R functions
 
 

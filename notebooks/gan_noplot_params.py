@@ -110,7 +110,7 @@ def get_moments(d):
 #         return torch.cat([data, diffs], 1)
 
 
-def train():
+def train(epochs):
     # Model parameters
     g_input_size = 1      # Random noise dimension coming into generator, per output vector
     g_hidden_size = 5     # Generator complexity
@@ -124,7 +124,7 @@ def train():
     g_learning_rate = 1e-3
     sgd_momentum = 0.9
 
-    num_epochs = 500
+    num_epochs = epochs
     print_interval = 100
     d_steps = 10
     g_steps = 10

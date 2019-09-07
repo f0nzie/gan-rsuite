@@ -1,5 +1,5 @@
 ---
-title: "R version of Discriminator and Generator"
+title: "Normal and Uniform distributions"
 output: html_notebook
 ---
 
@@ -53,6 +53,7 @@ gi_sampler
 # parameters
 g_input_size <- 1L      # Random noise dimension coming into generator, per output vector
 d_input_size <- 500L    # Minibatch size - cardinality of distributions
+
 minibatch_size = d_input_size
 
 # real data from distribution
