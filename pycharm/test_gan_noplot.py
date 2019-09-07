@@ -155,37 +155,38 @@ def train():
     # Now, training loop alternates between Generator and Discriminator modes
 
     for epoch in range(num_epochs):
+        # alternate between two modes
         for d_index in range(d_steps):
-            # 1. Train D on real+fake
+            # 1. Train D on real+fake data
             D.zero_grad()
 
             #  1A: Train D on real data
             d_real_data = Variable(d_sampler(d_input_size))
             d_real_decision = D(preprocess(d_real_data))
             d_real_error = criterion(d_real_decision, Variable(torch.ones([1, 1])))  # ones = true
-            d_real_error.backward()  # compute/store gradients, but don't change params
+            d_real_error.backward()    # compute/store gradients, but don't change params
 
             #  1B: Train D on fake data
             d_gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
             d_fake_data = G(d_gen_input).detach()  # detach to avoid training G on these labels
             d_fake_decision = D(preprocess(d_fake_data.t()))
             d_fake_error = criterion(d_fake_decision, Variable(torch.zeros([1, 1])))  # zeros = fake
-            d_fake_error.backward()
+            d_fake_error.backward()  # calculate gradients
             d_optimizer.step()     # Only optimizes D's parameters; changes based on stored gradients from backward()
 
             dre, dfe = extract(d_real_error)[0], extract(d_fake_error)[0]
 
         for g_index in range(g_steps):
-            # 2. Train G on D's response (but DO NOT train D on these labels)
+            # 2. Train G on D's response (but DO NOT train D on these labels). D should not learn these labels
             G.zero_grad()
 
-            gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
-            g_fake_data = G(gen_input)
-            dg_fake_decision = D(preprocess(g_fake_data.t()))
+            gen_input = Variable(gi_sampler(minibatch_size, g_input_size))    # input noise
+            g_fake_data = G(gen_input)                                        # generate fake samples
+            dg_fake_decision = D(preprocess(g_fake_data.t()))                 # probability data comes from real dataset
             g_error = criterion(dg_fake_decision, Variable(torch.ones([1, 1])))  # Train G to pretend it's genuine
 
-            g_error.backward()
-            g_optimizer.step()  # Only optimizes G's parameters
+            g_error.backward()        # calculate gradients
+            g_optimizer.step()        # Only optimizes G's parameters
             ge = extract(g_error)[0]
 
         if epoch % print_interval == 0:
