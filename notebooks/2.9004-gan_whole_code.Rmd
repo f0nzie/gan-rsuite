@@ -29,7 +29,7 @@ data_mean = 4
 data_stddev = 1.25
 
 
-# lambda functions
+# convert lambda functions
 name         <- "Only 4 moments"
 preprocess   <- function(data) get_moments(data)
 d_input_func <- function(x) 4
