@@ -18,6 +18,7 @@ sample <- vector("list")
 for (i in seq(1:10)) {
     cat("sample:", i, "\n")
     ret_values = train()
+    cat(sprintf("mean: %f; sd: %f\n", mean(ret_values), sd(ret_values)))
     print(fivenum(ret_values))
     sample[[i]] <- ret_values     # save samples in a list vector
 }
@@ -26,6 +27,7 @@ toc()
 
 ```
 seed   epochs  samples   fivenum                                           elapsed  from
+123     500      10      4.683814  6.960758 10.527839 10.842631 10.882711    151.4  Rmarkdown
 123     500      10      4.683814  6.960758 10.527839 10.842631 10.882711    168.5  Rmarkdown
 123    5000      10      1.043203 3.473358 3.916274 4.637702 6.908193       1402.5  Rmarkdown
 123    5000      10      1.043203 3.473358 3.916274 4.637702 6.908193       1365.5  Rmarkdown
