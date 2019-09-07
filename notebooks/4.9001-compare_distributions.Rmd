@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(rTorch)
+library(tictoc)
+
+tic()
+# gan_noplot.py lives under notebooks/ folder
+# gan <- reticulate::import("gan_noplot")   # import Python script
+gan   <- import("gan_noplot_params")   # import available in rTorch
+train <- gan$train
+sample <- vector("list")
+for (i in seq(1:10)) {
+    message("sample:", i)
+    ret_values = train(5000L)
+    cat(sprintf("mean: %f; sd: %f\n", mean(ret_values), sd(ret_values)))
+    print(fivenum(ret_values))
+    sample[[i]] <- ret_values     # save samples in a list vector
+}
+toc()
+```
+
+
+```
+seed   epochs  samples   fivenum                                           elapsed  from
+123     5000     10       1.043203 3.473358 3.916274 4.637702 6.908193     1477.6s
+123     1350     10       2.967617 4.598238 5.950178 6.130955 6.161784      431.0s
+123      500     10       4.683814  6.960758 10.527839 10.842631 10.882711  154.9s  Rmarkdown
+123      500     10       1.215804 2.322461 6.252569 7.867764 7.961365      165.5s
+
+```
