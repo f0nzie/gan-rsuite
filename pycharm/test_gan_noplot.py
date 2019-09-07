@@ -194,7 +194,8 @@ def train():
                   (epoch, dre, dfe, ge, stats(extract(d_real_data)), stats(extract(d_fake_data))))
             sys.stdout.flush()
 
-        values = extract(g_fake_data)
+        # values = extract(g_fake_data)   # original indentation
+    values = extract(g_fake_data)  # modified indentation
 
     return values
 
