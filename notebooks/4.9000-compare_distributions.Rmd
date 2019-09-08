@@ -1,5 +1,5 @@
 ---
-title: "The real data distribution"
+title: "The training distribution"
 output: html_notebook
 ---
 
@@ -77,11 +77,18 @@ d_gen_input$shape
 
 ```{r}
 # flatten the tensor first
+# v_ means vector
 v_d_real_data <- d_real_data$flatten()$numpy()
 v_d_gen_input <- d_gen_input$flatten()$numpy()
 fivenum(v_d_real_data)
 fivenum(v_d_gen_input)
 ```
+
+```{r}
+save(v_d_real_data, file = "s123-real_data.rda")
+write.csv(v_d_real_data, file = "s123-real_data.csv")
+```
+
 
 ```{r}
 # histogram of the real data (R) distribution
