@@ -189,7 +189,7 @@ def train(epochs):
         if epoch % print_interval == 0:
             print("\t Epoch %s: D (%s real_err, %s fake_err) G (%s err); Real Dist (%s),  Fake Dist (%s) " %
                   (epoch, dre, dfe, ge, stats(extract(d_real_data)), stats(extract(d_fake_data))))
-            sys.stdout.flush()
+            sys.stdout.flush()  # force print buffer out
 
         # print("Plotting the generated distribution...")
         values = extract(g_fake_data)

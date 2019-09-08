@@ -16,7 +16,7 @@ train <- gan$train
 sample <- vector("list")
 for (i in seq(1:10)) {
     message("sample:", i)
-    ret_values = train(5000L)
+    ret_values = train(500L)
     cat(sprintf("mean: %f; sd: %f\n", mean(ret_values), sd(ret_values)))
     print(fivenum(ret_values))
     sample[[i]] <- ret_values     # save samples in a list vector
