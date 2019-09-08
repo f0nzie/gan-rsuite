@@ -89,6 +89,10 @@ save(v_d_real_data, file = "s123-real_data.rda")
 write.csv(v_d_real_data, file = "s123-real_data.csv")
 ```
 
+```{r}
+read.csv(file = "s123-real_data.csv")
+```
+
 
 ```{r}
 # histogram of the real data (R) distribution
