@@ -63,7 +63,7 @@ dim(metrics_sample)
 ```
 
 ```{r}
-save(metrics, file = "metrics_s123e500-1.rda")
+save(metrics, synth_data, file = "metrics_s123e5000-2.rda")
 ```
 
 
@@ -148,5 +148,27 @@ ggplot(all_mean_sd, aes(x = epoch, y = synth_sd)) +
 ggplot(synth_data_df, aes(x = data)) +
     geom_histogram(bins = 50) +
     facet_wrap(. ~ run, nrow=2)
+```
+
+```{r}
+library(dplyr)
+
+data_1 <- synth_data_df %>% 
+    filter(run == 1) %>% 
+    .$data
+
+fivenum(data_1)    
+mean(data_1)
+sd(data_1)
+```
+
+```{r}
+# run the mean and standard deviation on the synthetic data samples
+library(dplyr)
+
+synth_data_df %>% 
+    group_by(run) %>% 
+    summarise(mean(data), sd(data))
+
 ```
 
