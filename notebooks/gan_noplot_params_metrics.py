@@ -175,7 +175,6 @@ def train(epochs):
             d_fake_error = criterion(d_fake_decision, Variable(torch.zeros([1,1])))  # zeros = fake
             d_fake_error.backward() # calculate gradients
             d_optimizer.step()      # Only optimizes D's parameters; changes based on stored gradients from backward()
-
             dre, dfe = extract(d_real_error)[0], extract(d_fake_error)[0]
 
         for g_index in range(g_steps):

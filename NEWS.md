@@ -1,5 +1,10 @@
 # CHANGES
 
+## 0.0.4.9001 (2019-09-08)
+* Write .rda file of synthetic datasets (ten) and metrics
+* Summarize mean and sd for all the synthetic samples
+* Plot histograms for all the synthetic datasets (ten)
+
 ## 0.0.4.9000 (2019-09-08)
 * Write CSV real data file
 
