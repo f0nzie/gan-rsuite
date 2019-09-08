@@ -1,5 +1,5 @@
 ---
-title: "The training distribution"
+title: "The real data distribution"
 output: html_notebook
 ---
 
