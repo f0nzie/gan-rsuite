@@ -1,5 +1,8 @@
 # CHANGES
 
+## 0.0.4.9000 (2019-09-08)
+* Write CSV real data file
+
 ## 0.0.4 (2019-09-08)
 * Corresponding Rmarkdown notebooks for calling the Python scripts.
 * New script `gan_noplot_params)metrics.py` that return the metrics and the synthetic data from each of the samples.
