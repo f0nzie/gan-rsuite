@@ -7,6 +7,7 @@ from py_functions import fivenum
 
 import sys
 import numpy as np
+import pandas as pd
 import time
 import torch
 import torch.nn as nn
@@ -109,8 +110,12 @@ def get_moments(d):
 #     else:
 #         return torch.cat([data, diffs], 1)
 
+columns = ["epoch", "dre", "dfe", "ge", "mean_fake", "sd_fake"]
 
 def train(epochs):
+    results_per_epoch = pd.DataFrame()
+    results = []
+    
     # Model parameters
     g_input_size = 1      # Random noise dimension coming into generator, per output vector
     g_hidden_size = 5     # Generator complexity
@@ -168,37 +173,36 @@ def train(epochs):
             d_fake_data = G(d_gen_input).detach()  # detach to avoid training G on these labels
             d_fake_decision = D(preprocess(d_fake_data.t()))
             d_fake_error = criterion(d_fake_decision, Variable(torch.zeros([1,1])))  # zeros = fake
-            d_fake_error.backward()
-            d_optimizer.step()     # Only optimizes D's parameters; changes based on stored gradients from backward()
+            d_fake_error.backward() # calculate gradients
+            d_optimizer.step()      # Only optimizes D's parameters; changes based on stored gradients from backward()
 
             dre, dfe = extract(d_real_error)[0], extract(d_fake_error)[0]
 
         for g_index in range(g_steps):
             # 2. Train G on D's response (but DO NOT train D on these labels)
             G.zero_grad()
-
-            gen_input = Variable(gi_sampler(minibatch_size, g_input_size))
-            g_fake_data = G(gen_input)
-            dg_fake_decision = D(preprocess(g_fake_data.t()))
-            g_error = criterion(dg_fake_decision, Variable(torch.ones([1,1])))  # Train G to pretend it's genuine
-
-            g_error.backward()
+            gen_input = Variable(gi_sampler(minibatch_size, g_input_size)) # input noise
+            g_fake_data = G(gen_input)                        # generate fake samples
+            dg_fake_decision = D(preprocess(g_fake_data.t())) # probability data comes from real dataset
+            # Train G to pretend it's genuine
+            g_error = criterion(dg_fake_decision, Variable(torch.ones([1,1])))  
+            g_error.backward()  # calculate gradients
             g_optimizer.step()  # Only optimizes G's parameters
             ge = extract(g_error)[0]
 
         if epoch % print_interval == 0:
-            print("\t Epoch %s: D (%s real_err, %s fake_err) G (%s err); Real Dist (%s),  Fake Dist (%s) " %
-                  (epoch, dre, dfe, ge, stats(extract(d_real_data)), stats(extract(d_fake_data))))
-            sys.stdout.flush()  # force print buffer out
-
-        # print("Plotting the generated distribution...")
-        values = extract(g_fake_data)
-        # print(" Values: %s" % (str(values)))
-        # print(" fivemnum %s" % str(fivenum(values)))
+            print("Epoch %s: " % (epoch))
+            print("\t D (%s real_err, %s fake_err)" % (dre, dfe))
+            print("\t G (%s err)" % (ge))
+            print("\t Real Dist (%s) " % stats(extract(d_real_data)))
+            print("\t Fake Dist (%s) " % stats(extract(d_fake_data)))
+            sys.stdout.flush() # force print buffer flush out
         
-        # print("Seed: %d; epochs: %d" % (seed, epochs))
-        # print("Seed: %d" % seed)
-
-    return values
+        values = extract(g_fake_data)  # fake data values per epoch
+        mean = np.mean(values)
+        sd = np.std(values)
+        results.append([epoch, dre, dfe, ge, mean, sd])  # accumulate essential values
+    results_per_epoch = pd.DataFrame(results, columns=columns)
+    return results_per_epoch   # one dataframe for all epochs
 
 

@@ -89,6 +89,28 @@ hist(v_d_real_data, breaks = 60)
 ```
 
 ```{r}
+library(ggplot2)
+
+df <- data.frame(v_d_real_data)
+ggplot(df, aes(x=v_d_real_data)) +
+    geom_histogram(color="black", fill="white", bins = 50)
+
+```
+
+
+```{r}
+library(ggplot2)
+df <- data.frame(v_d_real_data)
+ggplot(df, aes(x=v_d_real_data)) +
+    geom_histogram(aes(y = ..density..), bins = 50) +
+    geom_density(alpha = 0.2, fill = "#CA5521")
+
+```
+
+
+## Load stored dataset
+
+```{r}
 # load ten samples at the highest epoch number
 load(file = "s123e5000.rda")
 t(sapply(sample, fivenum))
@@ -105,6 +127,19 @@ sapply(sample, sd)
 
 ```{r}
 lapply(sample, hist, breaks = 60)
+```
+
+```{r}
+library(ggplot2)
+
+gghist <- function(x) {
+    df <- data.frame(x)  
+    ggplot(df, aes(x=x)) +
+    geom_histogram(aes(y = ..density..), bins = 50, fill = "white", color = "black") +
+    geom_density(alpha = 0.2, fill = "#CA5521")
+}
+
+lapply(sample, gghist)
 ```
 
 

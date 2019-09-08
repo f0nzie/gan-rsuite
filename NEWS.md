@@ -1,5 +1,12 @@
 # CHANGES
 
+## 0.0.4 (2019-09-08)
+* Corresponding Rmarkdown notebooks for calling the Python scripts.
+* New script `gan_noplot_params)metrics.py` that return the metrics and the synthetic data from each of the samples.
+* New script `gan_noplot_params_df.py` that returns a dataframe of only the statistical metrics from the GAN.
+* New README as Rmd file
+
+
 ## 0.0.3 (2019-09-06)
 * Add new script `gan_noplot_params.py` that receives a parameter for the number of epochs.
 * New notebook series 4 to study the distributions for real and fake data
