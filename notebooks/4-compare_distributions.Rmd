@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "Compare distributions"
 output: html_notebook
 ---
 

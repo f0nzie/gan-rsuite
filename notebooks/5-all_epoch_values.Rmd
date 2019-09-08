@@ -1,0 +1,112 @@
+---
+title: "Retrieve and plot GAN quality over epochs"
+output: html_notebook
+---
+
+## TOC
+- 5.9000: Retrieve synthetic data and GAN evaluation metrics
+
+**Objective**
+Observe the quality of the fake data as we iterate through the training epochs.
+Generate mean and standard deviation of the fake data distribution over each epoch.
+
+**Recipe**
+1. Modify the original GAN script to support the input of the epochs and return a dataframe of essential values at each epoch iteration.
+
+
+```{r}
+# Generate fake data. Set the epochs.
+
+library(rTorch)
+library(tictoc)
+
+tic()
+# gan_noplot.py lives under notebooks/ folder
+# gan <- reticulate::import("gan_noplot")   # import Python script
+gan   <- import("gan_noplot_params_df")   # import available in rTorch
+train <- gan$train
+sample <- vector("list")
+for (i in seq(1:10)) {
+    message("sample:", i)
+    ret_values = train(500L)
+    # cat(sprintf("mean: %f; sd: %f\n", mean(ret_values), sd(ret_values)))
+    # print(fivenum(ret_values))
+    sample[[i]] <- cbind(i, ret_values)     # save samples in a list vector
+}
+toc()
+```
+
+```
+123   5000  10  1580.6s
+123   5000  10  1394.0s
+```
+
+```{r}
+metrics <- sample
+save(metrics, file = "metrics_s123e500.rda")
+```
+
+
+```{r}
+sample
+```
+
+
+
+```{r}
+# extract key values from the list and return as dataframe
+get_epoch <- function(x) {
+    data.frame(run = x$i, epoch = x$epoch, mean = x$mean_fake, sd = x$sd_fake)
+}
+
+# mean and standard deviation table
+mean_sd_10  <- lapply(sample, get_epoch)
+all_mean_sd <- do.call(rbind, mean_sd_10)
+all_mean_sd
+```
+
+
+```{r}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+run <- all_mean_sd %>% 
+    filter(run == 1) 
+
+ggplot(run, aes(x = epoch, y = mean)) +
+    geom_point(alpha = 0.25)
+
+ggplot(run, aes(x = epoch, y = sd)) +
+geom_point(alpha = 0.5)
+```
+
+```{r fig.height=4.5, fig.width=9}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+
+ggplot(all_mean_sd, aes(x = epoch, y = mean)) +
+    geom_point(alpha = 0.3, size = 0.01, color = "darkgreen") +
+    geom_hline(aes(yintercept = 4), linetype = "dotted") + 
+    scale_y_continuous(name="Mean", breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+    scale_x_continuous(name="epoch", limits = c(0, 6000)) +
+    facet_wrap(. ~ run, nrow = 2) +
+    labs(title = "Mean")
+```
+
+```{r fig.height=4.5, fig.width=9}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+
+ggplot(all_mean_sd, aes(x = epoch, y = sd)) +
+    geom_point(alpha = 0.3, size = 0.01, color = "blue") +
+    geom_hline(aes(yintercept = 1), linetype = "dotted") + 
+    scale_y_continuous(name="SD", breaks = c(0, 1, 2, 3, 4, 5)) +
+    scale_x_continuous(name="epoch", limits = c(0, 6000)) +
+    facet_wrap(. ~ run, nrow = 2) +
+    labs(title = "Standard Deviation")
+```
