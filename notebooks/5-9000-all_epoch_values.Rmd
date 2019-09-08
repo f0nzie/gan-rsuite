@@ -63,7 +63,7 @@ dim(metrics_sample)
 ```
 
 ```{r}
-save(metrics, file = "metrics_s123e500-2.rda")
+save(metrics, synth_data, file = "metrics_s123e5000-2.rda")
 ```
 
 
