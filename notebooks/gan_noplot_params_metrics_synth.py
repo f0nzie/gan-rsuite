@@ -18,15 +18,17 @@ from torch.autograd import Variable
 
 # how do we set a global variable seed?
 # seeds
-seed = 123
-def set_seed(seed_=123):
+
+def set_seed(seed_=None):
     global seed
     seed = seed_
+    if seed != None:
+        torch.manual_seed(seed)
+        np.random.seed(seed=seed)
+    print("Seed:", seed)
+    sys.stdout.flush() # force print buffer flush out
     return
-    
 
-torch.manual_seed(seed)
-np.random.seed(seed=seed)
 
 # Data params
 data_mean = 4
