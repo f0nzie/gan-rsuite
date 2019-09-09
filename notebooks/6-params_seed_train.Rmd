@@ -34,7 +34,7 @@ toc()
 ```
 
 ```{r}
-save(synth_data, metrics, file = "s456_e5000_synth_metrics.rda")
+save(synth_data, metrics, file = "s777_e5000_synth_metrics.rda")
 # save(synth_data, metrics, file = "s123_e500_synth_metrics.rda")
 ```
 
