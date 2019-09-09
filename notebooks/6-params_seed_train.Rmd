@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+# Get synthetic data and GAN evaluation metrics
+# Generate fake data. Set the epochs.
+
+library(rTorch)
+library(tictoc)
+
+tic()
+# gan_noplot.py lives under notebooks/ folder
+# gan <- reticulate::import("gan_noplot")   # import Python script
+gan   <- import("gan_noplot_params_metrics_synth")   # import available in rTorch
+gan$set_seed(123)
+train <- gan$train
+synth_data <- vector("list")
+metrics    <- vector("list")
+for (i in seq(1:10)) {
+    message("Sample:", i)
+    results = train(500L)
+    synth_data_ <- results[[1]]
+    metrics_    <- results[[2]]
+    # cat(sprintf("mean: %f; sd: %f\n", mean(ret_values), sd(ret_values)))
+    # print(fivenum(ret_values))
+    synth_data[[i]] <- data.frame(run = i, data = synth_data_)
+    metrics[[i]]    <- cbind(i, metrics_)     # save samples in a list vector
+}
+toc()
+```
+
+```{r}
+save(synth_data, metrics, file = "s123_e500_synth_metrics.rda")
+```
+
+```
+	 Fake Dist ([3.079975176692009, 1.7256698555166063]) 
+Sample:10
+Epoch 0: 
+	 D (0.6893011331558228 real_err, 0.7020352482795715 fake_err)
+	 G (0.6849998235702515 err)
+	 Real Dist ([4.164440550327301, 1.2685123823966626]) 
+	 Fake Dist ([0.3123665914535522, 0.012017886288549042]) 
+Epoch 100: 
+	 D (0.6778525114059448 real_err, 0.6515550017356873 fake_err)
+	 G (0.7369881868362427 err)
+	 Real Dist ([3.9510868844985962, 1.2359530322697967]) 
+	 Fake Dist ([0.4308378039598465, 0.014762186727164292]) 
+Epoch 200: 
+	 D (0.5776322484016418 real_err, 0.5695621371269226 fake_err)
+	 G (0.8350841403007507 err)
+	 Real Dist ([4.007501809239388, 1.2197441630446135]) 
+	 Fake Dist ([2.218785249710083, 0.06337474411022352]) 
+Epoch 300: 
+	 D (0.5310569405555725 real_err, 0.38373464345932007 fake_err)
+	 G (1.1363900899887085 err)
+	 Real Dist ([4.0530986831188205, 1.2591459650025096]) 
+	 Fake Dist ([5.638111281394958, 0.03847741156208085]) 
+Epoch 400: 
+	 D (0.6630375385284424 real_err, 0.7861029505729675 fake_err)
+	 G (0.6298116445541382 err)
+	 Real Dist ([4.04948731783405, 1.3025245420462488]) 
+	 Fake Dist ([2.200346094608307, 2.043265349244449]) 
+182.208 sec elapsed
+
+
+Seed: 123
+Sample:10
+Epoch 0: 
+	 D (0.6893011331558228 real_err, 0.7020352482795715 fake_err)
+	 G (0.6849998235702515 err)
+	 Real Dist ([4.164440550327301, 1.2685123823966626]) 
+	 Fake Dist ([0.3123665914535522, 0.012017886288549042]) 
+Epoch 100: 
+	 D (0.6778525114059448 real_err, 0.6515550017356873 fake_err)
+	 G (0.7369881868362427 err)
+	 Real Dist ([3.9510868844985962, 1.2359530322697967]) 
+	 Fake Dist ([0.4308378039598465, 0.014762186727164292]) 
+Epoch 200: 
+	 D (0.5776322484016418 real_err, 0.5695621371269226 fake_err)
+	 G (0.8350841403007507 err)
+	 Real Dist ([4.007501809239388, 1.2197441630446135]) 
+	 Fake Dist ([2.218785249710083, 0.06337474411022352]) 
+Epoch 300: 
+	 D (0.5310569405555725 real_err, 0.38373464345932007 fake_err)
+	 G (1.1363900899887085 err)
+	 Real Dist ([4.0530986831188205, 1.2591459650025096]) 
+	 Fake Dist ([5.638111281394958, 0.03847741156208085]) 
+Epoch 400: 
+	 D (0.6630375385284424 real_err, 0.7861029505729675 fake_err)
+	 G (0.6298116445541382 err)
+	 Real Dist ([4.04948731783405, 1.3025245420462488]) 
+	 Fake Dist ([2.200346094608307, 2.043265349244449]) 
+167.213 sec elapsed
+```
