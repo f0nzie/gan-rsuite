@@ -1,0 +1,174 @@
+---
+title: "Load saved synthetic datasets"
+output: html_notebook
+---
+
+**Objective**
+Load a saved .Rdata file to start producing plots. We don't perform any iterations here.
+
+**Recipe**
+1. Load a .Rdata file with metrics and synthetic data
+2. Convert the metrics and synthetic data objects from lists to dataframes
+3. Plot mean and SD for each of the ten samples
+4. Plot histograms for each of the sythetic datasets
+5. Boxplots comparing each of the synthetics datasets
+6. Boxplots comparing the real data to the synthetic datasets
+
+
+```{r}
+load(file = "metrics_s123e5000-2.rda")
+```
+
+```{r}
+# extract key values from the list and return as dataframe
+get_epoch <- function(x) {
+    data.frame(run = x$i, epoch = x$epoch, synth_mean = x$mean_fake, synth_sd = x$sd_fake)
+}
+
+# mean and standard deviation table
+mean_sd_10  <- lapply(metrics, get_epoch)
+all_mean_sd <- do.call(rbind, mean_sd_10)
+all_mean_sd
+```
+
+
+```{r}
+# dataframe for all the sythetic datasets
+synth_data_df <- do.call(rbind, synth_data)
+synth_data_df
+```
+
+
+```{r fig.height=4.5, fig.width=9}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+
+ggplot(all_mean_sd, aes(x = epoch, y = synth_mean)) +
+    geom_point(alpha = 0.3, size = 0.01, color = "darkgreen") +
+    geom_hline(aes(yintercept = 4), linetype = "dotted") + 
+    scale_y_continuous(name="Mean", breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+    scale_x_continuous(name="epoch", limits = c(0, 6000)) +
+    facet_wrap(. ~ run, nrow = 2) +
+    labs(title = "Mean")
+```
+
+```{r fig.height=4.5, fig.width=9}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+
+ggplot(all_mean_sd, aes(x = epoch, y = synth_sd)) +
+    geom_point(alpha = 0.3, size = 0.01, color = "blue") +
+    geom_hline(aes(yintercept = 1), linetype = "dotted") + 
+    scale_y_continuous(name="SD", breaks = c(0, 1, 2, 3, 4, 5)) +
+    scale_x_continuous(name="epoch", limits = c(0, 6000)) +
+    facet_wrap(. ~ run, nrow = 2) +
+    labs(title = "Standard Deviation")
+```
+
+```{r}
+# run the mean and standard deviation on the synthetic data samples
+library(dplyr)
+
+synth_data_df %>% 
+    group_by(run) %>% 
+    summarise(mean(data), sd(data))
+
+```
+
+```{r}
+# facets for all synthetic datasets
+ggplot(synth_data_df, aes(x = data)) +
+    geom_histogram(bins = 50) +
+    facet_wrap(. ~ run, nrow=2)
+```
+
+## Boxplots
+
+```{r}
+ggplot(synth_data_df, aes(x = run, y = data, group = run)) +
+    geom_boxplot() +
+    scale_x_discrete(name = "Sample #", limits = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    
+```
+
+
+```{r}
+ggplot(synth_data_df, aes(x = run, y = data, group = run)) +
+    geom_boxplot() +
+    geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.25) + 
+    scale_x_discrete(name = "Sample #", limits = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ))
+    
+```
+
+
+```{r fig.width=9}
+ggplot(synth_data_df, aes(x = run, y = data, group = run)) +
+    geom_violin(trim = FALSE) +
+    stat_summary(fun.y=mean, geom="point", shape=23, size=2) +
+    stat_summary(fun.y=median, geom="point", size=2, color="red") +
+    scale_x_discrete(name = "Sample #", limits = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ))
+```
+
+
+```{r}
+# load the real data
+library(dplyr)
+
+real_data <- read.csv(file = "s123-real_data.csv")
+real_data
+
+# add run number and rename column
+real_data_df <- 
+real_data %>% 
+    mutate(run = 0, data = x, class = "real") %>% 
+    select(run, data, class) %>% 
+    print
+    
+```
+
+```{r}
+# add column to indicate it is synthetic data
+synth_data_df$class <- "synth"
+
+# combine real and synthetic data
+real_plus_synth <- rbind(synth_data_df, real_data_df)
+real_plus_synth
+```
+
+```{r}
+# plot real and synthetic data
+ggplot(real_plus_synth, aes(x = run, y = data, group = run, color = class)) +
+    geom_boxplot() +
+    geom_jitter(shape = 10, position = position_jitter(0.2), alpha = 0.20) +
+    scale_x_discrete(name = "Sample #", limits = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+    
+```
+
+
+```{r}
+library(dplyr)
+# load the real data
+real_data <- read.csv(file = "s123-real_data.csv")
+real_data
+# add run number 0 for the rel dataset and rename column
+real_data_df <- 
+real_data %>% 
+    mutate(run = 0, data = x, class = "real") %>% 
+    select(run, data, class) %>% 
+    print
+# add column to indicate it is synthetic data
+synth_data_df$class <- "synth"
+# combine real and synthetic data
+real_plus_synth <- rbind(synth_data_df, real_data_df)
+real_plus_synth
+# plot real and synthetic data
+ggplot(real_plus_synth, aes(x = run, y = data, group = run, color = class)) +
+    geom_boxplot() +
+    geom_jitter(shape = 10, position = position_jitter(0.2), alpha = 0.20) +
+    scale_x_discrete(name = "Sample #", limits = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+```
+
