@@ -10,6 +10,18 @@ Generate mean and standard deviation of the fake data distribution over each epo
 **Recipe**
 1. Modify the original GAN script to support the input of the epochs and return a dataframe of essential values at each epoch iteration.
 
+**Code**
+- Calling `gan_noplot_params_metrics`
+- 
+
+**Data Objects**
+- `train()` returns metrics and synthetic data
+- Objects generated are one dataframe per run, for mnetrics and synthetic data
+- Plot of the mean and SD for one sample
+- Facet plots for mean and SD
+- Facet plot of histograms for all synthetic datasets
+- Summary of mean and SD for the ten samples
+
 
 ```{r}
 # Get synthetic data and GAN evaluation metrics
@@ -63,8 +75,14 @@ dim(metrics_sample)
 ```
 
 ```{r}
+# save two data objects
 save(metrics, synth_data, file = "metrics_s123e5000-2.rda")
 ```
+
+```{r}
+load(file = "metrics_s123e5000-2.rda")
+```
+
 
 
 ## Dataframe of metrics for all epochs
@@ -81,14 +99,6 @@ all_mean_sd <- do.call(rbind, mean_sd_10)
 all_mean_sd
 ```
 
-```{r}
-# synthetic data
-get_row <- function(x) {
-    data.frame(run = x$i, data = x$synth_data_)    
-}
-
-lapply(synth_data, get_row)
-```
 
 ```{r}
 # dataframe for all the sythetic datasets
@@ -98,7 +108,7 @@ synth_data_df
 
 
 ```{r}
-# histogram with ggplot2 for one run
+# mean and SD plot for one sample
 library(dplyr)
 library(ggplot2)
 
@@ -113,7 +123,7 @@ geom_point(alpha = 0.5)
 ```
 
 ```{r fig.height=4.5, fig.width=9}
-# histogram with ggplot2
+# facet plot of the mean per sample
 library(dplyr)
 library(ggplot2)
 
@@ -128,10 +138,9 @@ ggplot(all_mean_sd, aes(x = epoch, y = synth_mean)) +
 ```
 
 ```{r fig.height=4.5, fig.width=9}
-# histogram with ggplot2
+# facet plot of the standard deviation per sample
 library(dplyr)
 library(ggplot2)
-
 
 ggplot(all_mean_sd, aes(x = epoch, y = synth_sd)) +
     geom_point(alpha = 0.3, size = 0.01, color = "blue") +
@@ -145,6 +154,7 @@ ggplot(all_mean_sd, aes(x = epoch, y = synth_sd)) +
 ## Synthetic Data
 
 ```{r}
+# facets for all synthetic datasets
 ggplot(synth_data_df, aes(x = data)) +
     geom_histogram(bins = 50) +
     facet_wrap(. ~ run, nrow=2)

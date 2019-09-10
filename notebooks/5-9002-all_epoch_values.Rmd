@@ -1,0 +1,40 @@
+---
+title: "Epochs and quality of the synthetic data"
+output: html_notebook
+---
+
+```{r}
+load(file = "metrics_s123e5000-2.rda")
+```
+
+```{r}
+# extract key values from the list and return as dataframe
+get_epoch <- function(x) {
+    data.frame(run = x$i, epoch = x$epoch, synth_mean = x$mean_fake, synth_sd = x$sd_fake)
+}
+
+# mean and standard deviation table
+mean_sd_10  <- lapply(metrics, get_epoch)
+all_mean_sd <- do.call(rbind, mean_sd_10)
+all_mean_sd
+
+# dataframe for all the sythetic datasets
+synth_data_df <- do.call(rbind, synth_data)
+synth_data_df
+```
+
+
+```{r fig.height=4.5, fig.width=9}
+# histogram with ggplot2
+library(dplyr)
+library(ggplot2)
+
+
+ggplot(all_mean_sd, aes(x = epoch, y = mean)) +
+    geom_point(alpha = 0.3, size = 0.01, color = "darkgreen") +
+    geom_hline(aes(yintercept = 4), linetype = "dotted") + 
+    scale_y_continuous(name="Mean", breaks = c(0, 2, 4, 6, 8, 10, 12)) +
+    scale_x_continuous(name="epoch", limits = c(0, 6000)) +
+    facet_wrap(. ~ run, nrow = 2) +
+    labs(title = "Mean")
+```
