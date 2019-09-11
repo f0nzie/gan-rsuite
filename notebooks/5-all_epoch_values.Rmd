@@ -13,6 +13,14 @@ Generate mean and standard deviation of the fake data distribution over each epo
 **Recipe**
 1. Modify the original GAN script to support the input of the epochs and return a dataframe of essential values at each epoch iteration.
 
+**Data Objects**
+- Only the metrics. Synthetic data not included
+- Plots of mean and SD per synthetic dataset obtained at each run
+
+**Code**
+- Calling `gan_noplot_params_df.py`
+- Returns one dataframe per run
+
 
 ```{r}
 # Generate fake data. Set the epochs.
@@ -52,6 +60,10 @@ sample
 ```
 
 
+```{r}
+load(file = "metrics_s123e5000.rda")
+```
+
 
 ```{r}
 # extract key values from the list and return as dataframe
@@ -60,14 +72,14 @@ get_epoch <- function(x) {
 }
 
 # mean and standard deviation table
-mean_sd_10  <- lapply(sample, get_epoch)
+mean_sd_10  <- lapply(metrics, get_epoch)
 all_mean_sd <- do.call(rbind, mean_sd_10)
 all_mean_sd
 ```
 
 
 ```{r}
-# histogram with ggplot2
+# mean and SD of a sample
 library(dplyr)
 library(ggplot2)
 
@@ -82,7 +94,7 @@ geom_point(alpha = 0.5)
 ```
 
 ```{r fig.height=4.5, fig.width=9}
-# histogram with ggplot2
+# mean of all ten syhthetic samples
 library(dplyr)
 library(ggplot2)
 
@@ -97,7 +109,7 @@ ggplot(all_mean_sd, aes(x = epoch, y = mean)) +
 ```
 
 ```{r fig.height=4.5, fig.width=9}
-# histogram with ggplot2
+# SD of all ten syhthetic samples
 library(dplyr)
 library(ggplot2)
 
