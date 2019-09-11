@@ -1,5 +1,11 @@
 # CHANGES
 
+## 0.0.5 (2019-09-09)
+* Generate synthetic data at seed=456 and 777
+* Slides with synthetic data at seeds 123, 456 and 777
+* Make function for converting lists of dataframes to unique dataframes
+* New notebook series 6 to read synthetic data files
+
 ## 0.0.4.9001 (2019-09-08)
 * Write .rda file of synthetic datasets (ten) and metrics
 * Summarize mean and sd for all the synthetic samples
