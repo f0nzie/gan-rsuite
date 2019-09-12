@@ -154,8 +154,8 @@ def calc_gradient_penalty(netD, real_data, fake_data):
 
 netG = Generator()
 netD = Discriminator()
-print netG
-print netD
+print(netG)
+print(netD)
 
 if use_cuda:
     netD = netD.cuda(gpu)
