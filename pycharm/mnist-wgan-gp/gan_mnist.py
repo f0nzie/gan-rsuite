@@ -26,12 +26,12 @@ use_cuda = torch.cuda.is_available()
 if use_cuda:
     gpu = 0
 
-DIM = 64 # Model dimensionality
-BATCH_SIZE = 50 # Batch size
-CRITIC_ITERS = 5 # For WGAN and WGAN-GP, number of critic iters per gen iter
-LAMBDA = 10 # Gradient penalty lambda hyperparameter
-ITERS = 200000 # How many generator iterations to train for
-OUTPUT_DIM = 784 # Number of pixels in MNIST (28*28)
+DIM = 64          # Model dimensionality
+BATCH_SIZE = 50   # Batch size
+CRITIC_ITERS = 5  # For WGAN and WGAN-GP, number of critic iters per gen iter
+LAMBDA = 10       # Gradient penalty lambda hyperparameter
+ITERS = 200000    # How many generator iterations to train for
+OUTPUT_DIM = 784  # Number of pixels in MNIST (28*28)
 
 lib.print_model_settings(locals().copy())
 
@@ -123,6 +123,7 @@ def generate_image(frame, netG):
         'tmp/mnist/samples_{}.png'.format(frame)
     )
 
+
 # Dataset iterator
 train_gen, dev_gen, test_gen = lib.mnist.load(BATCH_SIZE, BATCH_SIZE)
 
@@ -134,7 +135,7 @@ def inf_train_gen():
 
 
 def calc_gradient_penalty(netD, real_data, fake_data):
-    #print real_data.size()
+    # print real_data.size()
     alpha = torch.rand(BATCH_SIZE, 1)
     alpha = alpha.expand(real_data.size())
     alpha = alpha.cuda(gpu) if use_cuda else alpha
