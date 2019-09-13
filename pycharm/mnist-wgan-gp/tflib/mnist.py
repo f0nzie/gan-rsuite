@@ -1,5 +1,4 @@
 import numpy
-
 import os
 import urllib
 import gzip
