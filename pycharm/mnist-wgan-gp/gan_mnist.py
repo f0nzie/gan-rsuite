@@ -178,6 +178,7 @@ if use_cuda:
 data = inf_train_gen()
 
 for iteration in range(ITERS):
+    print("Iteration: ", iteration)
     start_time = time.time()
     ############################
     # (1) Update D network
@@ -186,7 +187,6 @@ for iteration in range(ITERS):
         p.requires_grad = True   # they are set to False below in netG update
 
     for iter_d in range(CRITIC_ITERS):
-        print("Iteration: ", iteration)
         _data = next(data)
         real_data = torch.Tensor(_data)
         if use_cuda:
