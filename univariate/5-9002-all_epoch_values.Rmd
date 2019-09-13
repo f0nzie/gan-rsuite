@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
-load(file = "metrics_s123e5000-2.rda")
+load(file = "s123e5000_metrics-2.rda")
 ```
 
 ```{r}
@@ -30,7 +30,7 @@ library(dplyr)
 library(ggplot2)
 
 
-ggplot(all_mean_sd, aes(x = epoch, y = mean)) +
+ggplot(all_mean_sd, aes(x = epoch, y = synth_mean)) +
     geom_point(alpha = 0.3, size = 0.01, color = "darkgreen") +
     geom_hline(aes(yintercept = 4), linetype = "dotted") + 
     scale_y_continuous(name="Mean", breaks = c(0, 2, 4, 6, 8, 10, 12)) +

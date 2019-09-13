@@ -76,11 +76,11 @@ dim(metrics_sample)
 
 ```{r}
 # save two data objects
-save(metrics, synth_data, file = "metrics_s123e5000-2.rda")
+save(metrics, synth_data, file = "s123e5000_metrics-2.rda")
 ```
 
 ```{r}
-load(file = "metrics_s123e5000-2.rda")
+load(file = "s123e5000_metrics-2.rda")
 ```
 
 
