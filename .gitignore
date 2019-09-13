@@ -93,3 +93,17 @@ pycharm/mnist-vanilla_gan/data/
 pycharm/mnist-vanilla_gan/dataset/
 
 pycharm/mnist-vanilla_gan/runs/
+
+pycharm/cifar-dcgan/.idea/
+
+pycharm/cifar-dcgan/.ipynb_checkpoints/
+
+pycharm/cifar-dcgan/runs/
+
+pycharm/cifar-dcgan/data/
+
+pycharm/cifar-dcgan/torch_data/
+
+pycharm/WassersteinGAN/.idea/
+
+pycharm/WassersteinGAN/cifar10/
