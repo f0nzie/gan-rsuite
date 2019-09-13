@@ -1,12 +1,9 @@
 # original from
 # https://github.com/caogang/wgan-gp
-import os, sys
-sys.path.append(os.getcwd())
-
+import os
+import sys
 import time
-
 import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import sklearn.datasets
@@ -22,6 +19,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
+matplotlib.use('Agg')
+sys.path.append(os.getcwd())
 torch.manual_seed(1)
 use_cuda = torch.cuda.is_available()
 if use_cuda:
