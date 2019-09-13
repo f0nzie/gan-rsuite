@@ -67,3 +67,15 @@ untitled/
 *.pkl
 
 pycharm/mnist-wgan-gp/tmp/mnist/
+
+pycharm/mnist_gan/runs/
+
+pycharm/mnist_gan/data/
+
+pycharm/mnist_gan/dataset/MNIST/
+
+pycharm/mnist-dcgan/runs/
+
+pycharm/mnist-dcgan/torch_data/
+
+pycharm/mnist-dcgan/data/
