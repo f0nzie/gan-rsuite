@@ -64,16 +64,16 @@ class Generator(nn.Module):
     def forward(self, input):
         output = self.preprocess(input)
         output = output.view(-1, 4*DIM, 4, 4)
-        #print output.size()
+        # print output.size()
         output = self.block1(output)
-        #print output.size()
+        # print output.size()
         output = output[:, :, :7, :7]
-        #print output.size()
+        # print output.size()
         output = self.block2(output)
-        #print output.size()
+        # print output.size()
         output = self.deconv_out(output)
         output = self.sigmoid(output)
-        #print output.size()
+        # print output.size()
         return output.view(-1, OUTPUT_DIM)
 
 
@@ -111,7 +111,7 @@ def generate_image(frame, netG):
     noise = torch.randn(BATCH_SIZE, 128)
     if use_cuda:
         noise = noise.cuda(gpu)
-    noisev = autograd.Variable(noise, volatile=True)
+    noisev = autograd.Variable(noise)
     samples = netG(noisev)
     samples = samples.view(BATCH_SIZE, 28, 28)
     # print samples.size()
@@ -206,7 +206,7 @@ for iteration in range(ITERS):
         noise = torch.randn(BATCH_SIZE, 128)
         if use_cuda:
             noise = noise.cuda(gpu)
-        noisev = autograd.Variable(noise, volatile=True)  # totally freeze netG
+        noisev = autograd.Variable(noise)  # totally freeze netG
         fake = autograd.Variable(netG(noisev).data)
         inputv = fake
         D_fake = netD(inputv)
@@ -252,7 +252,7 @@ for iteration in range(ITERS):
             imgs = torch.Tensor(images)
             if use_cuda:
                 imgs = imgs.cuda(gpu)
-            imgs_v = autograd.Variable(imgs, volatile=True)
+            imgs_v = autograd.Variable(imgs)
 
             D = netD(imgs_v)
             _dev_disc_cost = -D.mean().cpu().data.numpy()
