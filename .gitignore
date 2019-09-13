@@ -85,3 +85,11 @@ univariate/__pycache__/
 pycharm/mnist-wgan-gp/.idea/
 
 pycharm/gan-500_norm_samples/.idea/
+
+pycharm/mnist-vanilla_gan/.idea/
+
+pycharm/mnist-vanilla_gan/data/
+
+pycharm/mnist-vanilla_gan/dataset/
+
+pycharm/mnist-vanilla_gan/runs/
