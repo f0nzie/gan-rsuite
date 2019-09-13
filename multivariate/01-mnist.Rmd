@@ -3,6 +3,7 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+Article: https://medium.com/ai-society/gans-from-scratch-1-a-deep-introduction-with-code-in-pytorch-and-tensorflow-cb03cdcdba0f
 # Code: https://github.com/diegoalejogm/gans
 
 ```{r}
@@ -11,6 +12,10 @@ library(rTorch)
 
 
 ```{python}
+from IPython import display
+
+from utils import Logger
+
 import torch
 from torch import nn, optim
 from torch.autograd.variable import Variable
@@ -25,7 +30,7 @@ from utils import Logger
 
 ```{python}
 def mnist_data():
-    out_dir = './dataset'
+    out_dir = '../data'
     return datasets.MNIST(root=out_dir, 
                             train=True, 
                             transform=transforms.ToTensor(),
@@ -33,7 +38,7 @@ def mnist_data():
 
 data = mnist_data()                       
 data
-len(train_dataset)   
+len(data)   
 ```
 
 ```{python}
