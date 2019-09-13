@@ -16,7 +16,7 @@ Load a saved .Rdata file to start producing plots. We don't perform any iteratio
 
 
 ```{r}
-load(file = "metrics_s123e5000-2.rda")
+load(file = "s123e5000_metrics-2.rda")
 ```
 
 ```{r}

@@ -51,7 +51,8 @@ toc()
 
 ```{r}
 metrics <- sample
-save(metrics, file = "metrics_s123e500.rda")
+# save(metrics, file = "metrics_s123e500.rda")
+save(metrics, file = "s123e500_metrics.rda")
 ```
 
 
@@ -61,7 +62,7 @@ sample
 
 
 ```{r}
-load(file = "metrics_s123e5000.rda")
+load(file = "s123e500_metrics.rda")
 ```
 
 
