@@ -1,3 +1,4 @@
+# https://github.com/diegoalejogm/gans/blob/master/1.%20Vanilla%20GAN%20PyTorch.ipynb
 import torch
 from torch import nn, optim
 from torch.autograd.variable import Variable
