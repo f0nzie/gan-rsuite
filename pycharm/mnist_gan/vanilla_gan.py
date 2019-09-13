@@ -9,7 +9,7 @@ from utils import Logger
 
 def mnist_data():
     out_dir = './dataset'
-    return datasets.MNIST(root=out_dir, trai1n=True, transform=transforms.ToTensor(), download=True)
+    return datasets.MNIST(root=out_dir, train=True, transform=transforms.ToTensor(), download=True)
 
 
 data = mnist_data()
