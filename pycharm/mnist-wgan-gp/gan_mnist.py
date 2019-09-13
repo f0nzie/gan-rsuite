@@ -186,7 +186,7 @@ for iteration in range(ITERS):
         p.requires_grad = True  # they are set to False below in netG update
 
     for iter_d in range(CRITIC_ITERS):
-        _data = data.next()
+        _data = next(data)
         real_data = torch.Tensor(_data)
         if use_cuda:
             real_data = real_data.cuda(gpu)
