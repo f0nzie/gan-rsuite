@@ -36,6 +36,7 @@ OUTPUT_DIM = 784 # Number of pixels in MNIST (28*28)
 
 lib.print_model_settings(locals().copy())
 
+
 # ==================Definition Start======================
 class Generator(nn.Module):
     def __init__(self):
@@ -76,6 +77,7 @@ class Generator(nn.Module):
         #print output.size()
         return output.view(-1, OUTPUT_DIM)
 
+
 class Discriminator(nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
@@ -105,6 +107,7 @@ class Discriminator(nn.Module):
         out = self.output(out)
         return out.view(-1)
 
+
 def generate_image(frame, netG):
     noise = torch.randn(BATCH_SIZE, 128)
     if use_cuda:
@@ -123,10 +126,13 @@ def generate_image(frame, netG):
 
 # Dataset iterator
 train_gen, dev_gen, test_gen = lib.mnist.load(BATCH_SIZE, BATCH_SIZE)
+
+
 def inf_train_gen():
     while True:
         for images,targets in train_gen():
             yield images
+
 
 def calc_gradient_penalty(netD, real_data, fake_data):
     #print real_data.size()
@@ -151,6 +157,7 @@ def calc_gradient_penalty(netD, real_data, fake_data):
     return gradient_penalty
 
 # ==================Definition End======================
+
 
 netG = Generator()
 netD = Discriminator()
