@@ -81,3 +81,5 @@ pycharm/mnist-dcgan/torch_data/
 pycharm/mnist-dcgan/data/
 
 univariate/__pycache__/
+
+pycharm/mnist-wgan-gp/.idea/
