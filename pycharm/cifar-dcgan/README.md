@@ -2,6 +2,10 @@
 
 [TOC]
 
+## Objective
+
+Run Deep Convolutional GAN based on CIFAR dataset.
+
 ## Paper
 
 * https://arxiv.org/abs/1511.06434
