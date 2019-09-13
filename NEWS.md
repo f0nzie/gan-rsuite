@@ -1,5 +1,16 @@
 # CHANGES
 
+## 0.0.6 (2019-09-13)
+* WGANs running. Based on MNIST digits. Stopped at 40,000 iterations
+* Vanilla GAN running
+* Using symbolic link to `utils.py` in PyCharm folder
+* Output file not included either
+* Not including data files (they can be downloaded)
+* Documentating changes from Python 2.7 to 3.x on `mnist-wgan-gp` project
+* New GANs as Jupyter and Rmarkdown notebooks
+* Added `PyCharm` projects folder
+* Folders `univariate` and `multivariate` GANs
+
 ## 0.0.5 (2019-09-09)
 * Generate synthetic data at seed=456 and 777
 * Slides with synthetic data at seeds 123, 456 and 777
