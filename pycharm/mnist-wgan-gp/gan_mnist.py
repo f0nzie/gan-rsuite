@@ -183,9 +183,10 @@ for iteration in range(ITERS):
     # (1) Update D network
     ###########################
     for p in netD.parameters():  # reset requires_grad
-        p.requires_grad = True  # they are set to False below in netG update
+        p.requires_grad = True   # they are set to False below in netG update
 
     for iter_d in range(CRITIC_ITERS):
+        print("Iteration: ", iteration)
         _data = next(data)
         real_data = torch.Tensor(_data)
         if use_cuda:
