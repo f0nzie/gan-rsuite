@@ -83,3 +83,5 @@ pycharm/mnist-dcgan/data/
 univariate/__pycache__/
 
 pycharm/mnist-wgan-gp/.idea/
+
+pycharm/gan-500_norm_samples/.idea/
