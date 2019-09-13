@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import collections
 import time
-import cPickle as pickle
+import pickle as pickle
 
 _since_beginning = collections.defaultdict(lambda: {})
 _since_last_flush = collections.defaultdict(lambda: {})
@@ -34,7 +34,7 @@ def flush():
 		plt.ylabel(name)
 		plt.savefig(name.replace(' ', '_')+'.jpg')
 
-	print "iter {}\t{}".format(_iter[0], "\t".join(prints))
+	print("iter {}\t{}".format(_iter[0], "\t".join(prints)))
 	_since_last_flush.clear()
 
 	with open('log.pkl', 'wb') as f:
