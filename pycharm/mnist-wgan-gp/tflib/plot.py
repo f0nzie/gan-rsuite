@@ -14,7 +14,7 @@ _iter = [0]
 
 
 def tick():
-    iter[0] += 1
+    _iter[0] += 1
 
 
 def plot(name, value):
