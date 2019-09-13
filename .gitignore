@@ -25,3 +25,21 @@ pycharm/__pycache__/
 pycharm/.idea/
 
 notebooks/.ipynb_checkpoints/
+
+multivariate/.ipynb_checkpoints/
+
+multivariate/__pycache__/
+
+multivariate/data/images/VGAN/MNIST/
+
+pycharm/wgan-gp/.idea/
+
+pycharm/wgan-gp/tmp/mnist/
+
+pycharm/wgan-gp/log.pkl
+
+multivariate/runs/
+
+data/MNIST/
+
+pycharm/data/VGAN/MNIST/dataset/MNIST/
