@@ -1,5 +1,8 @@
 # CHANGES
 
+## 0.0.6.9000 (2019-09-13)
+* Regenerate `.rda` files for seed=123 and 500, 5000 epochs
+
 ## 0.0.6 (2019-09-13)
 * WGANs running. Based on MNIST digits. Stopped at 40,000 iterations
 * Vanilla GAN running
