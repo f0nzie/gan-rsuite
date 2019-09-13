@@ -49,14 +49,14 @@ def mnist_generator(data, batch_size, n_labelled, limit=None):
 
 
 def load(batch_size, test_batch_size, n_labelled=None):
-    filepath = '/tmp/mnist.pkl.gz'
+    filepath = './tmp/mnist.pkl.gz'
     url = 'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
 
     if not os.path.isfile(filepath):
         print("Couldn't find MNIST dataset in /tmp, downloading...")
         urllib.request.urlretrieve(url, filepath)
 
-    with gzip.open('/tmp/mnist.pkl.gz', 'rb') as f:
+    with gzip.open('./tmp/mnist.pkl.gz', 'rb') as f:
         train_data, dev_data, test_data = pickle.load(f)
 
     return (
