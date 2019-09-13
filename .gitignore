@@ -79,3 +79,5 @@ pycharm/mnist-dcgan/runs/
 pycharm/mnist-dcgan/torch_data/
 
 pycharm/mnist-dcgan/data/
+
+univariate/__pycache__/
