@@ -1,6 +1,11 @@
 # CHANGES
 
+## 0.0.7 (2019-09-14)
+
+* add new example for Wasserstein GAN from [repo](https://github.com/martinarjovsky/WassersteinGAN) based on [paper Wasserstein GAN](https://arxiv.org/abs/1701.07875). Modify code to make it able running from CPU.
+
 ## 0.0.6.9001 (2019-09-13)
+
 * add documentation for each project via `README.md`
 
 
@@ -13,7 +18,7 @@
 * Using symbolic link to `utils.py` in PyCharm folder
 * Output file not included either
 * Not including data files (they can be downloaded)
-* Documentating changes from Python 2.7 to 3.x on `mnist-wgan-gp` project
+* Documenting changes from Python 2.7 to 3.x on `mnist-wgan-gp` project
 * New GANs as Jupyter and Rmarkdown notebooks
 * Added `PyCharm` projects folder
 * Folders `univariate` and `multivariate` GANs
@@ -44,10 +49,10 @@
 * New notebook series 4 to study the distributions for real and fake data
 * Print the mean and standard deviation at the end of each sample (10 samples)
 * Take more measurements of `fivenum` of the resulting distribution
-* PLot histograms of the real and fake data
+* Plot histograms of the real and fake data
 
 ## 0.0.2 (2019-09-06)
-* Use Python code without matplotlib for ciomparative results: Rmarkdown vs Jupyter vs PyCharm.
+* Use Python code without matplotlib for comparative results: Rmarkdown vs Jupyter vs PyCharm.
 * Take measurements at different `epochs`.
 * Test GANs at different `epochs`: 500, 1350 and 5000.
 * Create a second set of Python file with without `matplotlib`

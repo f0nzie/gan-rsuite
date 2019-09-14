@@ -1,3 +1,4 @@
+#
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -44,9 +45,15 @@ class DCGAN_D(nn.Module):
         self.main = main
 
     def forward(self, input):
-        if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
-            output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
+        # print(type(input))
+
+        # print(self.ngpu)
+        if torch.cuda.is_available():
+            if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
+                # print("GPU")
+                output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
         else:
+            # print("no CUDA")
             output = self.main(input)
             
         output = output.mean(0)
@@ -100,8 +107,9 @@ class DCGAN_G(nn.Module):
         self.main = main
 
     def forward(self, input):
-        if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
-            output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
+        if torch.cuda.is_available():
+            if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
+                output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
         else: 
             output = self.main(input)
         return output 
@@ -146,8 +154,10 @@ class DCGAN_D_nobn(nn.Module):
         self.main = main
 
     def forward(self, input):
-        if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
-            output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
+        # print(input)
+        if torch.cuda.is_available():
+            if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
+                output = nn.parallel.data_parallel(self.main, input, range(self.ngpu))
         else: 
             output = self.main(input)
             
@@ -195,8 +205,9 @@ class DCGAN_G_nobn(nn.Module):
         self.main = main
 
     def forward(self, input):
-        if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
-            output = nn.parallel.data_parallel(self.main, input,  range(self.ngpu))
+        if torch.cuda.is_available():
+            if isinstance(input.data, torch.cuda.FloatTensor) and self.ngpu > 1:
+                output = nn.parallel.data_parallel(self.main, input,  range(self.ngpu))
         else: 
             output = self.main(input)
         return output 

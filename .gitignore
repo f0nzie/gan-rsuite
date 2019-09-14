@@ -107,3 +107,5 @@ pycharm/cifar-dcgan/torch_data/
 pycharm/WassersteinGAN/.idea/
 
 pycharm/WassersteinGAN/cifar10/
+
+pycharm/WassersteinGAN/out/
