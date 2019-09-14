@@ -1,3 +1,6 @@
+# Code: https://github.com/martinarjovsky/WassersteinGAN
+# Code accompanying the paper "Wasserstein GAN": https://arxiv.org/abs/1701.07875
+
 from __future__ import print_function
 import argparse
 import random
