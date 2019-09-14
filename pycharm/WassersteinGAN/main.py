@@ -60,6 +60,9 @@ if __name__ == "__main__":
 
     cudnn.benchmark = True
 
+    if not torch.cuda.is_available():
+        print("WARNING: You have no CUDA device, so you should probably run with --cpu")
+
     if torch.cuda.is_available() and not opt.cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
 
