@@ -1,3 +1,6 @@
+# Code: https://github.com/martinarjovsky/WassersteinGAN
+# Code accompanying the paper "Wasserstein GAN": https://arxiv.org/abs/1701.07875
+
 from __future__ import print_function
 import argparse
 import random
@@ -17,7 +20,7 @@ import json
 import models.dcgan as dcgan
 import models.mlp as mlp
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', required=True, help='cifar10 | lsun | imagenet | folder | lfw ')
@@ -34,6 +37,7 @@ if __name__=="__main__":
     parser.add_argument('--lrG', type=float, default=0.00005, help='learning rate for Generator, default=0.00005')
     parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda'  , action='store_true', help='enables cuda')
+    parser.add_argument('--cpu', action='store_true', help='enables cpu')
     parser.add_argument('--ngpu'  , type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--netG', default='', help="path to netG (to continue training)")
     parser.add_argument('--netD', default='', help="path to netD (to continue training)")
@@ -59,6 +63,9 @@ if __name__=="__main__":
     torch.manual_seed(opt.manualSeed)
 
     cudnn.benchmark = True
+
+    if not torch.cuda.is_available():
+        print("WARNING: You have no CUDA device, so you should probably run with --cpu")
 
     if torch.cuda.is_available() and not opt.cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
@@ -100,7 +107,8 @@ if __name__=="__main__":
     n_extra_layers = int(opt.n_extra_layers)
 
     # write out generator config to generate images together wth training checkpoints (.pth)
-    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu, "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
+    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu,
+                        "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
     with open(os.path.join(opt.experiment, "generator_config.json"), 'w') as gcfg:
         gcfg.write(json.dumps(generator_config)+"\n")
 
@@ -121,12 +129,13 @@ if __name__=="__main__":
         netG = dcgan.DCGAN_G(opt.imageSize, nz, nc, ngf, ngpu, n_extra_layers)
 
     # write out generator config to generate images together wth training checkpoints (.pth)
-    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu, "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
+    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu,
+                        "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
     with open(os.path.join(opt.experiment, "generator_config.json"), 'w') as gcfg:
         gcfg.write(json.dumps(generator_config)+"\n")
 
     netG.apply(weights_init)
-    if opt.netG != '': # load checkpoint if needed
+    if opt.netG != '':  # load checkpoint if needed
         netG.load_state_dict(torch.load(opt.netG))
     print(netG)
 
@@ -145,6 +154,13 @@ if __name__=="__main__":
     fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(0, 1)
     one = torch.FloatTensor([1])
     mone = one * -1
+
+    if opt.cpu:
+        netD.cpu()
+        netG.cpu()
+        input = input.cpu()
+        one, mone = one.cpu(), mone.cpu()
+        noise, fixed_noise = noise.cpu(), fixed_noise.cpu()
 
     if opt.cuda:
         netD.cuda()
@@ -169,8 +185,8 @@ if __name__=="__main__":
             ############################
             # (1) Update D network
             ###########################
-            for p in netD.parameters(): # reset requires_grad
-                p.requires_grad = True # they are set to False below in netG update
+            for p in netD.parameters():  # reset requires_grad
+                p.requires_grad = True  # they are set to False below in netG update
 
             # train the discriminator Diters times
             if gen_iterations < 25 or gen_iterations % 500 == 0:
@@ -203,7 +219,7 @@ if __name__=="__main__":
 
                 # train with fake
                 noise.resize_(opt.batchSize, nz, 1, 1).normal_(0, 1)
-                noisev = Variable(noise, volatile = True) # totally freeze netG
+                noisev = Variable(noise)  # totally freeze netG
                 fake = Variable(netG(noisev).data)
                 inputv = fake
                 errD_fake = netD(inputv)
@@ -215,7 +231,7 @@ if __name__=="__main__":
             # (2) Update G network
             ###########################
             for p in netD.parameters():
-                p.requires_grad = False # to avoid computation
+                p.requires_grad = False  # to avoid computation
             netG.zero_grad()
             # in case our last batch was the tail batch of the dataloader,
             # make sure we feed a full batch of noise
