@@ -216,7 +216,7 @@ if __name__ == "__main__":
 
                 # train with fake
                 noise.resize_(opt.batchSize, nz, 1, 1).normal_(0, 1)
-                noisev = Variable(noise, volatile = True) # totally freeze netG
+                noisev = Variable(noise)  # totally freeze netG
                 fake = Variable(netG(noisev).data)
                 inputv = fake
                 errD_fake = netD(inputv)
