@@ -17,7 +17,7 @@ import json
 import models.dcgan as dcgan
 import models.mlp as mlp
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', required=True, help='cifar10 | lsun | imagenet | folder | lfw ')
@@ -100,7 +100,8 @@ if __name__=="__main__":
     n_extra_layers = int(opt.n_extra_layers)
 
     # write out generator config to generate images together wth training checkpoints (.pth)
-    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu, "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
+    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu,
+                        "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
     with open(os.path.join(opt.experiment, "generator_config.json"), 'w') as gcfg:
         gcfg.write(json.dumps(generator_config)+"\n")
 
@@ -121,12 +122,13 @@ if __name__=="__main__":
         netG = dcgan.DCGAN_G(opt.imageSize, nz, nc, ngf, ngpu, n_extra_layers)
 
     # write out generator config to generate images together wth training checkpoints (.pth)
-    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu, "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
+    generator_config = {"imageSize": opt.imageSize, "nz": nz, "nc": nc, "ngf": ngf, "ngpu": ngpu,
+                        "n_extra_layers": n_extra_layers, "noBN": opt.noBN, "mlp_G": opt.mlp_G}
     with open(os.path.join(opt.experiment, "generator_config.json"), 'w') as gcfg:
         gcfg.write(json.dumps(generator_config)+"\n")
 
     netG.apply(weights_init)
-    if opt.netG != '': # load checkpoint if needed
+    if opt.netG != '':  # load checkpoint if needed
         netG.load_state_dict(torch.load(opt.netG))
     print(netG)
 
@@ -169,8 +171,8 @@ if __name__=="__main__":
             ############################
             # (1) Update D network
             ###########################
-            for p in netD.parameters(): # reset requires_grad
-                p.requires_grad = True # they are set to False below in netG update
+            for p in netD.parameters():  # reset requires_grad
+                p.requires_grad = True  # they are set to False below in netG update
 
             # train the discriminator Diters times
             if gen_iterations < 25 or gen_iterations % 500 == 0:
@@ -215,7 +217,7 @@ if __name__=="__main__":
             # (2) Update G network
             ###########################
             for p in netD.parameters():
-                p.requires_grad = False # to avoid computation
+                p.requires_grad = False  # to avoid computation
             netG.zero_grad()
             # in case our last batch was the tail batch of the dataloader,
             # make sure we feed a full batch of noise
