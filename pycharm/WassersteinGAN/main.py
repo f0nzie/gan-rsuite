@@ -34,6 +34,7 @@ if __name__ == "__main__":
     parser.add_argument('--lrG', type=float, default=0.00005, help='learning rate for Generator, default=0.00005')
     parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda'  , action='store_true', help='enables cuda')
+    parser.add_argument('--cpu', action='store_true', help='enables cpu')
     parser.add_argument('--ngpu'  , type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--netG', default='', help="path to netG (to continue training)")
     parser.add_argument('--netD', default='', help="path to netD (to continue training)")
@@ -150,6 +151,13 @@ if __name__ == "__main__":
     fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(0, 1)
     one = torch.FloatTensor([1])
     mone = one * -1
+
+    if opt.cpu:
+        netD.cpu()
+        netG.cpu()
+        input = input.cpu()
+        one, mone = one.cpu(), mone.cpu()
+        noise, fixed_noise = noise.cpu(), fixed_noise.cpu()
 
     if opt.cuda:
         netD.cuda()
