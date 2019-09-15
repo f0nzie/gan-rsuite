@@ -197,6 +197,7 @@ if __name__ == "__main__":
                 Diters = opt.Diters
             j = 0
             while j < Diters and i < len(dataloader):
+                print("epoch: [%d/%d]; data: [%d/%d]; D-iter: %d" % (epoch, opt.niter, i, len(dataloader), j))
                 j += 1
 
                 # clamp parameters to a cube
