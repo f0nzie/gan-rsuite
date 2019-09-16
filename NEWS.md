@@ -1,5 +1,10 @@
 # CHANGES
 
+## 0.0.7 (2019-09-15)
+
+* add new example dcgan-faces. Jupyter notebook, script and Rmarkdown notebook.
+* rename, reorder, remove old projects
+
 ## 0.0.7 (2019-09-14)
 
 * add new example for Wasserstein GAN from [repo](https://github.com/martinarjovsky/WassersteinGAN) based on [paper Wasserstein GAN](https://arxiv.org/abs/1701.07875). Modify code to make it able running from CPU.
