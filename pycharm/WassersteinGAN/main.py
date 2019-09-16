@@ -179,9 +179,11 @@ if __name__ == "__main__":
 
     gen_iterations = 0
     for epoch in range(opt.niter):
+        print("epoch: %d" % epoch)
         data_iter = iter(dataloader)
         i = 0
         while i < len(dataloader):
+
             ############################
             # (1) Update D network
             ###########################
@@ -195,6 +197,7 @@ if __name__ == "__main__":
                 Diters = opt.Diters
             j = 0
             while j < Diters and i < len(dataloader):
+                print("epoch: [%d/%d]; data: [%d/%d]; D-iter: %d" % (epoch, opt.niter, i, len(dataloader), j))
                 j += 1
 
                 # clamp parameters to a cube

@@ -3,6 +3,12 @@ title: "Generate synthetic datasets with seed=456"
 output: html_notebook
 ---
 
+**Objective**
+1. Input a seed
+2. Input the number of epochs
+3. Generatic synthetic data and metrics
+
+
 ```{r}
 # Get synthetic data and GAN evaluation metrics
 # Generate fake data. Set the epochs.
@@ -16,7 +22,7 @@ tic()
 gan   <- import("gan_noplot_params_metrics_synth")   # import available in rTorch
 
 # set seed
-gan$set_seed(777L)
+gan$set_seed(12345L)
 train <- gan$train
 synth_data <- vector("list")
 metrics    <- vector("list")
@@ -34,7 +40,7 @@ toc()
 ```
 
 ```{r}
-save(synth_data, metrics, file = "s777_e5000_synth_metrics.rda")
+save(synth_data, metrics, file = "s12345_e5000_synth_metrics.rda")
 # save(synth_data, metrics, file = "s123_e500_synth_metrics.rda")
 ```
 
