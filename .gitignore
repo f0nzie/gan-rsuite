@@ -111,3 +111,23 @@ pycharm/WassersteinGAN/cifar10/
 pycharm/WassersteinGAN/out/
 
 pycharm/WassersteinGAN/out-cifar10/
+
+pycharm/lsun-dcgan/.idea/
+
+pycharm/lsun-dcgan/classroom_train_lmdb/
+
+pycharm/lsun-dcgan/classroom_val_lmdb/
+
+pycharm/lsun-dcgan/out-cifar10/
+
+pycharm/lsun-dcgan/out-mnist/
+
+pycharm/gan-3/.idea/
+
+pycharm/gan-3/datasets/
+
+pycharm/gan-3/logs/
+
+pycharm/dcgan-faces/.idea/
+
+pycharm/dcgan-faces/.ipynb_checkpoints/
